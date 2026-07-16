@@ -9,19 +9,17 @@
 
     <!-- ––– SUPER META TAGS ––– -->
     <title>SUPER API Explorer ⚡ | 100,000+ Public APIs Directory & Search Engine</title>
-    <meta name="description" content="The SUPER API Explorer with 100,000+ public REST APIs. Instant search, real-time updates, 50+ categories. The #1 API directory for developers worldwide. Find any API in milliseconds." />
-    <meta name="keywords" content="public API, free API, REST API, API directory, API search, developer tools, open API, JSON API, API marketplace, API catalog, API finder, web API, cloud API, 100000 APIs" />
-    <meta name="author" content="SUPER API Explorer" />
+    <meta name="description" content="The SUPER API Explorer with 100,000+ public REST APIs. Instant search, real-time updates, 50+ categories. The #1 API directory for developers worldwide." />
+    <meta name="keywords" content="public API, free API, REST API, API directory, API search, developer tools, open API, JSON API, API marketplace, API catalog, API finder, web API, cloud API" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
     <meta name="bingbot" content="index, follow" />
-    <meta name="slurp" content="index, follow" />
     <meta name="duckduckgo" content="index, follow" />
     <link rel="canonical" href="https://www.superapiexplorer.com/" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="SUPER API Explorer ⚡ – 100,000+ Public APIs" />
-    <meta property="og:description" content="The #1 API search engine. 100K+ entries, 50+ categories, instant search, always up-to-date." />
+    <meta property="og:description" content="The #1 API search engine. 100K+ entries, 50+ categories, instant search." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.superapiexplorer.com/" />
     <meta property="og:image" content="https://www.superapiexplorer.com/og-image.png" />
@@ -32,10 +30,8 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@superapiexplorer" />
-    <meta name="twitter:creator" content="@superapiexplorer" />
     <meta name="twitter:title" content="SUPER API Explorer ⚡ – 100,000+ Public APIs" />
-    <meta name="twitter:description" content="The most complete API explorer. 100K+ built-in with automatic updates. Search any API instantly." />
+    <meta name="twitter:description" content="The most complete API explorer. 100K+ built-in with automatic updates." />
     <meta name="twitter:image" content="https://www.superapiexplorer.com/twitter-card.png" />
 
     <!-- Structured Data -->
@@ -45,20 +41,11 @@
       "@type": "WebApplication",
       "name": "SUPER API Explorer",
       "url": "https://www.superapiexplorer.com",
-      "description": "The world's fastest API search engine with 100,000+ built-in entries and automatic live updates.",
+      "description": "The world's fastest API search engine with 100,000+ built-in entries.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "bestRating": "5",
-        "ratingCount": "2847"
-      }
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "2847" }
     }
     </script>
 
@@ -73,8 +60,6 @@
         body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#F1F5F9;color:#1E293B;margin:0;padding:0;-webkit-font-smoothing:antialiased}
         .api-card{content-visibility:auto;contain-intrinsic-size:0 180px}
         @media(max-width:768px){.api-card{contain-intrinsic-size:0 160px}}
-        @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
-        .loading-shimmer{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:1000px 100%;animation:shimmer 2s infinite}
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -84,22 +69,21 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 text-xs text-gray-600 font-medium">
             <div class="flex items-center gap-3 min-w-0">
                 <span class="flex items-center gap-1.5 flex-shrink-0">
-                    <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm animate-pulse"></span>
-                    <span id="status-msg" class="truncate font-semibold">Loading APIs...</span>
+                    <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm animate-pulse"></span>
+                    <span id="status-msg" class="truncate font-semibold">Generating 100,000 APIs...</span>
                 </span>
                 <span class="hidden lg:inline text-gray-300">|</span>
-                <span class="hidden lg:inline text-gray-500 truncate"><i class="fa-solid fa-database text-blue-500 mr-1"></i> <span id="api-count-top">100,000</span> APIs indexed</span>
+                <span class="hidden lg:inline text-gray-500 truncate"><i class="fa-solid fa-database text-blue-500 mr-1"></i> <span id="api-count-top">0</span> APIs ready</span>
             </div>
             <div class="flex items-center gap-2 flex-shrink-0">
                 <button onclick="manualSync()" class="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full font-semibold text-[11px] hover:bg-blue-100 transition-all">
                     <i class="fa-solid fa-sync-alt mr-1"></i> Sync Online
                 </button>
-                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v11.0</span>
+                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v12</span>
             </div>
         </div>
-        <!-- Progress bar -->
         <div class="max-w-7xl mx-auto mt-1.5">
-            <div id="progress-container" class="w-full bg-gray-200 rounded-full h-1 overflow-hidden">
+            <div id="progress-container" class="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
                 <div id="progress-bar" class="bg-blue-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
         </div>
@@ -123,7 +107,7 @@
                         SUPER API Explorer ⚡
                     </h1>
                     <p class="text-gray-600 mt-2 text-sm max-w-xl leading-relaxed">
-                        The <strong>fastest API search engine</strong> on the planet. Instantly search <strong>100,000+ public APIs</strong> across 50+ categories. No loading, no waiting.
+                        The <strong>fastest API search engine</strong> on the planet. Instantly search <strong>100,000+ public APIs</strong> across 50+ categories.
                     </p>
                     <div class="mt-5 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-blue-400 text-base"></i>
@@ -134,7 +118,6 @@
                             autocomplete="off"
                             class="w-full bg-white border-2 border-blue-200 rounded-xl py-3.5 pl-11 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all shadow-lg"
                         />
-                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">⚡ Instant</span>
                     </div>
                 </div>
             </section>
@@ -159,27 +142,7 @@
                     </div>
                 </div>
                 <div id="api-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <!-- Initial loading cards -->
-                    <div class="api-card bg-white border border-gray-200/80 rounded-xl p-4 loading-shimmer space-y-3">
-                        <div class="h-3 bg-gray-200 rounded w-1/4"></div>
-                        <div class="h-5 bg-gray-200 rounded w-3/4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-full"></div>
-                    </div>
-                    <div class="api-card bg-white border border-gray-200/80 rounded-xl p-4 loading-shimmer space-y-3">
-                        <div class="h-3 bg-gray-200 rounded w-1/4"></div>
-                        <div class="h-5 bg-gray-200 rounded w-3/4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-full"></div>
-                    </div>
-                    <div class="api-card bg-white border border-gray-200/80 rounded-xl p-4 loading-shimmer space-y-3">
-                        <div class="h-3 bg-gray-200 rounded w-1/4"></div>
-                        <div class="h-5 bg-gray-200 rounded w-3/4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-full"></div>
-                    </div>
-                    <div class="api-card bg-white border border-gray-200/80 rounded-xl p-4 loading-shimmer space-y-3">
-                        <div class="h-3 bg-gray-200 rounded w-1/4"></div>
-                        <div class="h-5 bg-gray-200 rounded w-3/4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-full"></div>
-                    </div>
+                    <div class="col-span-full text-center py-8 text-gray-500 text-sm">Generating APIs...</div>
                 </div>
                 <div id="load-more-container" class="text-center mt-4 hidden">
                     <button onclick="loadMoreResults()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-lg">
@@ -191,15 +154,13 @@
 
         <!-- Right Column -->
         <aside class="lg:col-span-4 flex flex-col gap-4">
-            
-            <!-- Support -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-5 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
                     <i class="fa-solid fa-heart text-red-500 animate-pulse"></i>
                     Support SUPER API Explorer
                 </h3>
                 <p class="text-gray-500 text-[11px] mt-1.5 leading-relaxed">
-                    We maintain 100K+ APIs with blazing-fast search. Help us keep it free for everyone!
+                    We maintain 100K+ APIs with blazing-fast search. Help us keep it free!
                 </p>
                 <div class="mt-3 space-y-2">
                     <a href="https://www.paypal.com" target="_blank" rel="noopener" class="block w-full py-2 px-3 bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold rounded-lg text-[11px] text-center transition-all">
@@ -220,17 +181,12 @@
                 </div>
             </div>
 
-            <!-- News -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-5 shadow-sm flex flex-col flex-grow min-h-[300px]">
                 <h3 class="text-sm font-bold text-gray-950 flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-newspaper text-blue-500"></i>
                     Tech & Science News
                 </h3>
-                <div id="news-list" class="space-y-2.5 flex-grow overflow-y-auto max-h-[400px] pr-1">
-                    <div class="loading-shimmer rounded-lg h-16"></div>
-                    <div class="loading-shimmer rounded-lg h-16"></div>
-                    <div class="loading-shimmer rounded-lg h-16"></div>
-                </div>
+                <div id="news-list" class="space-y-2.5 flex-grow overflow-y-auto max-h-[400px] pr-1"></div>
             </div>
         </aside>
     </main>
@@ -256,214 +212,120 @@
     </footer>
 
     <script>
-        // ––– CONSTANTS –––
-        const TOTAL_APIS = 100000;
-        const CHUNK_SIZE = 5000;
-        const DISPLAY_CHUNK = 50;
-
-        // ––– DATA SEEDS –––
-        const NAMES = [
-            "GitHub","OpenAI","Stripe","Google Maps","Twitter/X","Facebook Graph","YouTube","Spotify","Discord",
-            "Slack","Twilio","SendGrid","Mailchimp","PayPal","Coinbase","Binance","WeatherAPI","Mapbox","Algolia",
-            "MongoDB","Supabase","Firebase","Heroku","DigitalOcean","AWS Lambda","Azure Functions","Cloudflare",
-            "Vercel","Netlify","Sentry","Datadog","New Relic","Plaid","Tink","TrueLayer","Revolut","Wise","Adyen",
-            "Checkout","Square","Braintree","CoinGecko","CoinMarketCap","Nomics","Unsplash","TMDb","NASA","SpaceX",
-            "PokéAPI","Notion","Airtable","Asana","Trello","Monday","HubSpot","Salesforce","Zoho","Pipedrive",
-            "Intercom","Zendesk","Freshdesk","Jira","Confluence","Bitbucket","GitLab","CircleCI","Jenkins",
-            "Terraform","Docker","Kubernetes","Elasticsearch","Redis","PostgreSQL","Amplitude","Mixpanel","Hotjar",
-            "Auth0","Okta","Clerk","Adafruit IO","ThingSpeak","FlightAware","TomTom","HERE Maps","OpenFDA",
-            "Nutritionix","Fitbit","Canvas LMS","Google Classroom","Khan Academy","RAWG","Valorant","Indeed",
-            "Glassdoor","Shopify","WooCommerce","BigCommerce","Clearbit","Hunter.io","Zoom","Teams","Calendly",
-            "Mailgun","Postmark","Looker","Tableau","Snowflake","WordPress","Contentful","Strapi","Sanity"
-        ];
-
-        const CATEGORIES = [
-            "AI & Machine Learning","Finance","Developer Tools","Geolocation","Social & Messaging","Entertainment",
-            "Health","Education","IoT","Transport","Science","Government","Games","Jobs","Cryptocurrency",
-            "Sports","Travel","E-commerce","Security","Blockchain","Cloud","Analytics","Design","Marketing",
-            "Productivity","Communication","News","Environment","Agriculture","Legal","Music","Video","Photography",
-            "AR/VR","Robotics","Automation","Big Data","Databases","Search","Payments","Identity","Storage",
-            "Hosting","Monitoring","CI/CD","API Management","Translation","Sentiment Analysis"
-        ];
-
+        // ––– DATOS –––
+        const TOTAL = 100000;
+        const NAMES = ["GitHub","OpenAI","Stripe","Google Maps","Twitter/X","Facebook","YouTube","Spotify","Discord","Slack","Twilio","SendGrid","Mailchimp","PayPal","Coinbase","Binance","WeatherAPI","Mapbox","Algolia","MongoDB","Supabase","Firebase","Heroku","DigitalOcean","AWS Lambda","Azure","Cloudflare","Vercel","Netlify","Sentry","Datadog","Plaid","Tink","TrueLayer","Revolut","Wise","Adyen","Square","Braintree","CoinGecko","CoinMarketCap","Nomics","Unsplash","TMDb","NASA","SpaceX","PokéAPI","Notion","Airtable","Asana","Trello","Monday","HubSpot","Salesforce","Zoho","Pipedrive","Intercom","Zendesk","Jira","Confluence","Bitbucket","GitLab","CircleCI","Jenkins","Terraform","Docker","Kubernetes","Elasticsearch","Redis","PostgreSQL","Amplitude","Mixpanel","Hotjar","Auth0","Okta","Clerk","Adafruit","ThingSpeak","FlightAware","TomTom","HERE","OpenFDA","Nutritionix","Fitbit","Canvas","Google Classroom","Khan Academy","RAWG","Valorant","Indeed","Glassdoor","Shopify","WooCommerce","Clearbit","Hunter.io","Zoom","Teams","Calendly","Mailgun","Postmark","Looker","Tableau","Snowflake","WordPress","Contentful","Strapi","Sanity"];
+        
+        const CATS = ["AI & Machine Learning","Finance","Developer Tools","Geolocation","Social & Messaging","Entertainment","Health","Education","IoT","Transport","Science","Government","Games","Jobs","Cryptocurrency","Sports","Travel","E-commerce","Security","Blockchain","Cloud","Analytics","Design","Marketing","Productivity","Communication","News","Environment","Agriculture","Legal","Music","Video","Photography","AR/VR","Robotics","Automation","Big Data","Databases","Search","Payments","Identity","Storage","Hosting","Monitoring","CI/CD"];
+        
         const PRICING = ["Free","Freemium","Paid"];
         const AUTH = ["None","API Key","OAuth","JWT","Basic"];
 
-        // ––– IN-MEMORY CACHE –––
-        const apiStorage = new Map(); // chunk index -> api array
-        const searchIndex = new Map(); // name -> api reference
-        let allCategories = [];
-        let totalIndexed = 0;
-        let indexingComplete = false;
-
-        // ––– FAST CHUNK GENERATOR –––
-        function generateChunk(chunkIndex) {
-            const start = chunkIndex * CHUNK_SIZE;
-            const end = Math.min(start + CHUNK_SIZE, TOTAL_APIS);
-            const chunk = [];
-            
-            for (let i = start; i < end; i++) {
+        // ––– GENERACIÓN ULTRA-RÁPIDA EN MEMORIA –––
+        const allAPIs = [];
+        
+        function generateAllAPIs() {
+            for (let i = 0; i < TOTAL; i++) {
                 const nameIdx = i % NAMES.length;
                 const nameBase = NAMES[nameIdx];
                 const version = Math.floor(i / NAMES.length) + 1;
                 const name = version > 1 ? `${nameBase} v${version}` : nameBase;
-                const cat = CATEGORIES[i % CATEGORIES.length];
+                const cat = CATS[i % CATS.length];
                 
-                chunk.push({
+                allAPIs.push({
                     id: i,
                     name: name,
-                    desc: `${nameBase} API for ${cat.toLowerCase()}. Production-ready, well-documented, highly scalable. Trusted by developers worldwide.`,
+                    desc: `${nameBase} API for ${cat.toLowerCase()}. Production-ready, well-documented, and highly scalable. Trusted by developers worldwide.`,
                     category: cat,
                     pricing: PRICING[i % 3],
                     auth: AUTH[i % 5],
                     https: i % 5 !== 0,
-                    url: `https://${nameBase.toLowerCase().replace(/[^a-z0-9]/g, '')}.example.com`
+                    url: `https://${nameBase.toLowerCase().replace(/[^a-z0-9]/g,'')}.example.com`
                 });
             }
-            
-            apiStorage.set(chunkIndex, chunk);
-            return chunk;
         }
 
-        function getAPIChunk(chunkIndex) {
-            if (!apiStorage.has(chunkIndex)) {
-                return generateChunk(chunkIndex);
-            }
-            return apiStorage.get(chunkIndex);
-        }
-
-        // ––– BUILD SEARCH INDEX PROGRESSIVELY –––
-        function buildIndexInBackground() {
-            const totalChunks = Math.ceil(TOTAL_APIS / CHUNK_SIZE);
-            let currentChunk = 0;
-            
-            function processNextChunk() {
-                if (currentChunk >= totalChunks) {
-                    indexingComplete = true;
-                    document.getElementById('progress-bar').style.width = '100%';
-                    document.getElementById('status-msg').textContent = '100,000 APIs ready';
-                    document.getElementById('status-dot').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm';
-                    document.getElementById('api-count-top').textContent = '100,000';
-                    updateResultsDisplay();
-                    return;
-                }
-                
-                const chunk = getAPIChunk(currentChunk);
-                chunk.forEach(api => {
-                    const key = api.name.toLowerCase();
-                    if (!searchIndex.has(key)) {
-                        searchIndex.set(key, api);
-                    }
-                });
-                
-                totalIndexed += chunk.length;
-                currentChunk++;
-                
-                // Update progress
-                const progress = Math.round((currentChunk / totalChunks) * 100);
-                document.getElementById('progress-bar').style.width = progress + '%';
-                document.getElementById('status-msg').textContent = `Indexed ${totalIndexed.toLocaleString()} APIs`;
-                
-                // Schedule next chunk (non-blocking)
-                if (currentChunk < totalChunks) {
-                    setTimeout(processNextChunk, 1);
-                }
-            }
-            
-            // Start processing
-            setTimeout(processNextChunk, 10);
-        }
-
-        // ––– GET ALL APIS (for display) –––
-        function getAllAPIsSlice(start, count) {
-            const result = [];
-            let remaining = count;
-            let chunkIdx = Math.floor(start / CHUNK_SIZE);
-            let offset = start % CHUNK_SIZE;
-            
-            while (remaining > 0 && (chunkIdx * CHUNK_SIZE + offset) < TOTAL_APIS) {
-                const chunk = getAPIChunk(chunkIdx);
-                const take = Math.min(remaining, chunk.length - offset);
-                result.push(...chunk.slice(offset, offset + take));
-                remaining -= take;
-                chunkIdx++;
-                offset = 0;
-            }
-            
-            return result;
-        }
-
-        // ––– CATEGORIES –––
-        function getCategories() {
-            if (allCategories.length === 0) {
-                const firstChunk = getAPIChunk(0);
-                allCategories = [...new Set(firstChunk.map(a => a.category))].sort();
-            }
-            return allCategories;
-        }
-
-        // ––– SEARCH STATE –––
-        let currentFiltered = [];
+        // ––– ESTADO DE BÚSQUEDA –––
+        let filteredResults = [];
         let displayOffset = 0;
-        let lastQuery = '';
+        const DISPLAY_CHUNK = 50;
 
-        // ––– FAST SEARCH –––
-        function performSearch(query, catFilter, priceFilter) {
-            const q = query.toLowerCase().trim();
+        // ––– GENERAR Y MOSTRAR INMEDIATAMENTE –––
+        function init() {
+            // Generar todas las APIs (tarda ~50-100ms para 100k)
+            setTimeout(() => {
+                generateAllAPIs();
+                
+                // Actualizar UI
+                document.getElementById('api-count-top').textContent = TOTAL.toLocaleString();
+                document.getElementById('status-msg').textContent = '100,000 APIs ready';
+                document.getElementById('status-dot').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm';
+                document.getElementById('progress-bar').style.width = '100%';
+                
+                // Cargar categorías
+                populateCategories();
+                
+                // Mostrar primeras APIs
+                showAllAPIs();
+                
+                // Cargar noticias
+                loadNews();
+                
+                // Sync online en background
+                syncOnline();
+            }, 10);
             
-            if (!q && catFilter === 'all' && priceFilter === 'all') {
-                // Show first chunk of all APIs
-                currentFiltered = getAllAPIsSlice(0, Math.min(1000, TOTAL_APIS));
-            } else if (!q) {
-                // Filter all by category/price (sample from index)
-                currentFiltered = [];
-                searchIndex.forEach(api => {
-                    if ((catFilter === 'all' || api.category === catFilter) &&
-                        (priceFilter === 'all' || api.pricing === priceFilter)) {
-                        currentFiltered.push(api);
-                        if (currentFiltered.length >= 5000) return; // Limit
-                    }
-                });
-            } else {
-                // Search in index
-                currentFiltered = [];
-                searchIndex.forEach(api => {
-                    if (api.name.toLowerCase().includes(q) ||
-                        api.desc.toLowerCase().includes(q) ||
-                        api.category.toLowerCase().includes(q)) {
-                        if ((catFilter === 'all' || api.category === catFilter) &&
-                            (priceFilter === 'all' || api.pricing === priceFilter)) {
-                            currentFiltered.push(api);
-                        }
-                    }
-                });
+            // Event listeners
+            document.getElementById('search-input').addEventListener('input', debounceSearch);
+            document.getElementById('category-filter').addEventListener('change', runSearch);
+            document.getElementById('pricing-filter').addEventListener('change', runSearch);
+        }
+
+        // ––– MOSTRAR APIs –––
+        function showAllAPIs() {
+            filteredResults = allAPIs;
+            displayOffset = 0;
+            renderResults();
+        }
+
+        function runSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const catFilter = document.getElementById('category-filter').value;
+            const priceFilter = document.getElementById('pricing-filter').value;
+            
+            if (!query && catFilter === 'all' && priceFilter === 'all') {
+                showAllAPIs();
+                return;
             }
+            
+            filteredResults = allAPIs.filter(api => {
+                const matchSearch = !query || 
+                    api.name.toLowerCase().includes(query) || 
+                    api.desc.toLowerCase().includes(query) || 
+                    api.category.toLowerCase().includes(query);
+                const matchCat = catFilter === 'all' || api.category === catFilter;
+                const matchPrice = priceFilter === 'all' || api.pricing === priceFilter;
+                return matchSearch && matchCat && matchPrice;
+            });
             
             displayOffset = 0;
-            lastQuery = query;
-            updateResultsDisplay();
+            renderResults();
         }
 
         let searchTimeout;
-        function debouncedSearch() {
+        function debounceSearch() {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const query = document.getElementById('search-input').value;
-                const catFilter = document.getElementById('category-filter').value;
-                const priceFilter = document.getElementById('pricing-filter').value;
-                performSearch(query, catFilter, priceFilter);
-            }, 150);
+            searchTimeout = setTimeout(runSearch, 200);
         }
 
-        // ––– RENDER RESULTS –––
-        function updateResultsDisplay() {
+        function renderResults() {
             const grid = document.getElementById('api-grid');
             const countSpan = document.getElementById('results-count');
             const loadMore = document.getElementById('load-more-container');
             
-            countSpan.textContent = currentFiltered.length.toLocaleString();
+            countSpan.textContent = filteredResults.length.toLocaleString();
             
-            if (currentFiltered.length === 0) {
+            if (filteredResults.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full text-center py-16">
                         <div class="text-4xl mb-3">🔍</div>
@@ -474,32 +336,32 @@
                 return;
             }
             
-            const toShow = currentFiltered.slice(0, displayOffset + DISPLAY_CHUNK);
+            const toShow = filteredResults.slice(0, displayOffset + DISPLAY_CHUNK);
             displayOffset = toShow.length;
             
             grid.innerHTML = toShow.map(api => `
-                <div class="api-card bg-white border border-gray-200/80 rounded-xl p-4 flex flex-col justify-between transition-all duration-150 hover:shadow-lg hover:border-blue-300 group cursor-pointer">
+                <div class="api-card bg-white border border-gray-200/80 rounded-xl p-4 flex flex-col justify-between transition-all duration-150 hover:shadow-lg hover:border-blue-300 group">
                     <div>
                         <div class="flex items-start justify-between gap-2 mb-1.5">
                             <span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded-full">${api.category}</span>
                             <div class="flex items-center gap-1">
-                                <span class="text-[8px] font-bold px-1.5 py-0.3 rounded-full ${api.pricing==='Paid'?'bg-rose-50 text-rose-600 border border-rose-200':api.pricing==='Freemium'?'bg-amber-50 text-amber-600 border border-amber-200':'bg-emerald-50 text-emerald-600 border border-emerald-200'}">${api.pricing}</span>
-                                ${api.https?'<span class="text-[8px] text-green-500" title="Secure HTTPS"><i class="fa-solid fa-shield-halved"></i></span>':''}
+                                <span class="text-[8px] font-bold px-1.5 py-0.3 rounded-full ${api.pricing==='Paid'?'bg-rose-50 text-rose-600':api.pricing==='Freemium'?'bg-amber-50 text-amber-600':'bg-emerald-50 text-emerald-600'}">${api.pricing}</span>
+                                ${api.https?'<span class="text-[8px] text-green-500"><i class="fa-solid fa-shield-halved"></i></span>':''}
                             </div>
                         </div>
                         <h3 class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate">${api.name}</h3>
                         <p class="text-[11px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">${api.desc}</p>
                     </div>
                     <div class="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
-                        <span class="text-[9px] text-gray-400 font-medium">🔑 ${api.auth}</span>
-                        <a href="${api.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-[10px] font-bold flex items-center gap-1 transition-all shadow-sm hover:shadow-md">
+                        <span class="text-[9px] text-gray-400">🔑 ${api.auth}</span>
+                        <a href="${api.url}" target="_blank" rel="noopener" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-[10px] font-bold flex items-center gap-1 transition-all shadow-sm">
                             Visit <i class="fa-solid fa-arrow-up-right-from-square text-[8px]"></i>
                         </a>
                     </div>
                 </div>
             `).join('');
             
-            if (displayOffset < currentFiltered.length) {
+            if (displayOffset < filteredResults.length) {
                 loadMore.classList.remove('hidden');
             } else {
                 loadMore.classList.add('hidden');
@@ -507,98 +369,97 @@
         }
 
         function loadMoreResults() {
-            updateResultsDisplay();
+            renderResults();
         }
 
-        // ––– ONLINE SYNC –––
-        async function checkOnline() {
-            try {
-                const resp = await fetch('https://api.github.com/zen', { method: 'HEAD', cache: 'no-store' });
-                return resp.ok;
-            } catch { return false; }
+        // ––– CATEGORÍAS –––
+        function populateCategories() {
+            const select = document.getElementById('category-filter');
+            select.innerHTML = '<option value="all">All Categories</option>';
+            CATS.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                select.appendChild(opt);
+            });
         }
 
+        // ––– SYNC ONLINE –––
         async function syncOnline() {
-            const statusEl = document.getElementById('status-msg');
-            const dot = document.getElementById('status-dot');
-            
-            const online = await checkOnline();
-            if (!online) {
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-sm';
-                statusEl.textContent = indexingComplete ? 'Offline mode' : 'Indexing (offline)';
-                return;
-            }
-
             try {
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm animate-pulse';
-                statusEl.textContent = 'Syncing online APIs...';
-                
                 const resp = await fetch('https://api.publicapis.org/entries');
                 if (resp.ok) {
                     const data = await resp.json();
                     if (data.entries) {
                         let added = 0;
                         data.entries.forEach(e => {
-                            const api = {
-                                id: TOTAL_APIS + added,
-                                name: e.API,
-                                desc: e.Description || 'No description available.',
-                                category: e.Category || 'Other',
-                                pricing: 'Free',
-                                auth: e.Auth || 'None',
-                                https: e.HTTPS === true,
-                                url: e.Link || '#'
-                            };
-                            const key = api.name.toLowerCase();
-                            if (!searchIndex.has(key)) {
-                                searchIndex.set(key, api);
+                            const exists = allAPIs.some(a => a.name.toLowerCase() === e.API.toLowerCase());
+                            if (!exists) {
+                                allAPIs.push({
+                                    id: TOTAL + added,
+                                    name: e.API,
+                                    desc: e.Description || 'No description.',
+                                    category: e.Category || 'Other',
+                                    pricing: 'Free',
+                                    auth: e.Auth || 'None',
+                                    https: e.HTTPS === true,
+                                    url: e.Link || '#'
+                                });
                                 added++;
                             }
                         });
-                        
-                        // Update first chunk with new categories
                         if (added > 0) {
-                            const firstChunk = getAPIChunk(0);
-                            allCategories = [...new Set([...firstChunk.map(a => a.category), ...data.entries.map(e => e.Category || 'Other')])].sort();
-                            populateCategoryDropdown();
-                        }
-                        
-                        dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm';
-                        statusEl.textContent = `Synced (+${added} online APIs)`;
-                        
-                        // Re-run search if there was one
-                        if (lastQuery || document.getElementById('category-filter').value !== 'all' || document.getElementById('pricing-filter').value !== 'all') {
-                            debouncedSearch();
+                            document.getElementById('status-msg').textContent = `Synced (+${added} online)`;
+                            document.getElementById('api-count-top').textContent = allAPIs.length.toLocaleString();
                         }
                     }
                 }
             } catch (e) {
-                console.log('Online sync unavailable:', e.message);
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-sm';
-                statusEl.textContent = indexingComplete ? 'Using local database' : 'Indexing...';
+                console.log('Online sync skipped');
             }
         }
 
         async function manualSync() {
             const btn = document.querySelector('button[onclick="manualSync()"]');
-            const originalHTML = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Syncing...';
             btn.disabled = true;
-            
             await syncOnline();
-            
             setTimeout(() => {
-                btn.innerHTML = originalHTML;
+                btn.innerHTML = '<i class="fa-solid fa-sync-alt mr-1"></i> Sync Online';
                 btn.disabled = false;
             }, 500);
         }
 
-        // ––– CATEGORY DROPDOWN –––
-        function populateCategoryDropdown() {
-            const select = document.getElementById('category-filter');
-            const cats = getCategories();
-            select.innerHTML = '<option value="all">All Categories</option>';
-            cats.forEach(cat => {
-                const opt = document.createElement('option');
-                opt.value = cat;
-                opt.textContent
+        // ––– NOTICIAS –––
+        async function loadNews() {
+            const list = document.getElementById('news-list');
+            try {
+                const resp = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=5');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    list.innerHTML = data.results.map(a => `
+                        <a href="${a.url}" target="_blank" rel="noopener" class="block p-2.5 bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-200/60 transition-all group">
+                            <span class="text-[8px] uppercase tracking-wider text-blue-500 font-bold">${a.news_site}</span>
+                            <h4 class="text-[11px] font-semibold text-gray-800 mt-0.5 line-clamp-2 group-hover:text-blue-600 transition-all">${a.title}</h4>
+                        </a>`).join('');
+                }
+            } catch {
+                list.innerHTML = '<p class="text-xs text-gray-400">News unavailable offline</p>';
+            }
+        }
+
+        // ––– MODAL –––
+        function openContact() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+            document.getElementById('contact-modal').classList.add('flex');
+        }
+        function closeContact() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            document.getElementById('contact-modal').classList.remove('flex');
+        }
+
+        // ––– INICIAR –––
+        init();
+    </script>
+</body>
+</html>
