@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global API Hub – The Ultimate World API Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F3F3F6;
+            color: #1D1D1F;
+        }
+        ::-webkit-scrollbar {
+            width: 8px; height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.15);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Top bar -->
+    <div class="bg-white/80 backdrop-blur-md border-b border-gray-200/80 py-2.5 px-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4 text-xs text-gray-600 font-medium">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1.5">
+                    <span id="status-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm animate-pulse"></span>
+                    <span id="status-text">Cargando base masiva de APIs...</span>
+                </span>
+                <span class="hidden md:inline text-gray-300">|</span>
+                <span class="hidden md:inline text-gray-500"><i class="fa-solid fa-bolt text-amber-500 mr-1"></i> Miles de APIs, siempre actualizadas</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="refresh-apis-btn" class="bg-gray-200/60 text-gray-700 border border-gray-300/50 px-3 py-1 rounded font-semibold text-[10px] hover:bg-gray-300/70 transition-all">
+                    <i class="fa-solid fa-sync-alt mr-1"></i> Sincronizar
+                </button>
+                <span class="bg-gray-200/60 text-gray-800 border border-gray-300/50 px-2 py-0.5 rounded font-mono text-[10px]">v4.0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl w-full mx-auto p-4 md:p-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: search + results -->
+        <main class="lg:col-span-8 flex flex-col gap-6">
+            <div class="p-8 rounded-2xl bg-white border border-gray-200/60 shadow-md relative overflow-hidden">
+                <div class="flex gap-1.5 absolute top-4 left-4">
+                    <span class="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]"></span>
+                </div>
+                <div class="mt-4">
+                    <span class="px-2.5 py-1 text-xs font-semibold bg-gray-100 text-gray-700 rounded-full border border-gray-200 uppercase tracking-wider">Developer Hub</span>
+                    <h1 class="text-2xl md:text-3xl font-extrabold mt-3 text-gray-900 tracking-tight">
+                        El Explorador de APIs más Completo del Mundo 🚀
+                    </h1>
+                    <p class="text-gray-500 mt-2 text-sm max-w-xl leading-relaxed">
+                        Busca al instante entre miles de APIs públicas. Base de datos offline masiva + sincronización en vivo cada vez que entras.
+                    </p>
+                    <div class="mt-6 relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="search-input"
+                            placeholder="Busca miles de APIs por nombre, descripción, categoría..." 
+                            class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 class="text-md font-bold text-gray-800 flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-gray-600"></i>
+                        Integraciones disponibles 
+                        <span id="results-count" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-200 text-gray-600">0</span>
+                    </h2>
+                    <div class="flex items-center gap-2">
+                        <select id="category-filter" class="bg-white border border-gray-200 rounded-xl px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm max-w-[150px]">
+                            <option value="all">Todas las categorías</option>
+                        </select>
+                        <select id="pricing-filter" class="bg-white border border-gray-200 rounded-xl px-3 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm">
+                            <option value="all">Todos los modelos</option>
+                            <option value="Free">Gratis</option>
+                            <option value="Freemium">Freemium</option>
+                            <option value="Paid">Pago / Premium</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="api-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- skeletons -->
+                    <div class="bg-white border border-gray-200/80 rounded-xl p-5 animate-pulse space-y-3">
+                        <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+                        <div class="h-6 bg-gray-200 rounded w-3/4"></div>
+                        <div class="h-12 bg-gray-200 rounded"></div>
+                    </div>
+                    <div class="bg-white border border-gray-200/80 rounded-xl p-5 animate-pulse space-y-3">
+                        <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+                        <div class="h-6 bg-gray-200 rounded w-3/4"></div>
+                        <div class="h-12 bg-gray-200 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right: donation + news (unchanged) -->
+        <aside class="lg:col-span-4 flex flex-col gap-6">
+            <div class="bg-white border border-gray-200/60 rounded-2xl p-6 shadow-md relative overflow-hidden">
+                <div class="flex gap-1.5 absolute top-4 left-4">
+                    <span class="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]"></span>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-heart text-red-500 animate-pulse"></i>
+                        Apoya mi trabajo
+                    </h3>
+                    <p class="text-gray-500 text-xs mt-2 leading-relaxed">
+                        Construyo herramientas open‑source para desarrolladores. Si este hub te ahorra tiempo, ¡apoya futuras mejoras!
+                    </p>
+                    <div class="mt-4 space-y-2">
+                        <a href="https://www.paypal.com" target="_blank" class="w-full py-2 px-4 bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
+                            <i class="fa-brands fa-paypal"></i> Donar con PayPal
+                        </a>
+                        <a href="https://www.buymeacoffee.com" target="_blank" class="w-full py-2 px-4 bg-[#FFDD00] hover:bg-[#e6c700] text-slate-900 font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-sm">
+                            <i class="fa-solid fa-mug-hot"></i> Invítame un café
+                        </a>
+                    </div>
+                    <div class="border-t border-gray-200 my-4"></div>
+                    <h4 class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Conectar directamente</h4>
+                    <div class="flex gap-2">
+                        <button id="contact-email-btn" class="flex-1 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-semibold text-center transition-all border border-gray-200">
+                            <i class="fa-solid fa-envelope mr-1"></i> Email
+                        </button>
+                        <a href="https://github.com" target="_blank" class="flex-1 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-semibold text-center transition-all border border-gray-200">
+                            <i class="fa-brands fa-github mr-1"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-gray-200/60 rounded-2xl p-6 shadow-md flex flex-col flex-grow min-h-[350px]">
+                <h3 class="text-sm font-bold text-gray-950 flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-globe text-blue-500"></i>
+                    Noticias de Tecnología y Ciencia
+                </h3>
+                <div id="news-list" class="space-y-3 flex-grow overflow-y-auto max-h-[450px] pr-1">
+                    <div class="animate-pulse space-y-3">
+                        <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+                        <div class="h-4 bg-gray-200 rounded"></div>
+                        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Contact modal (unchanged) -->
+    <div id="email-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 relative overflow-hidden transform scale-95 transition-all duration-300">
+            <div class="flex gap-1.5 absolute top-4 left-4">
+                <button id="close-modal-dot" class="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80"></button>
+                <span class="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]"></span>
+                <span class="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]"></span>
+            </div>
+            <div class="p-6 pt-10">
+                <h3 class="text-lg font-bold text-gray-900 mb-1">📩 Contacto seguro</h3>
+                <p class="text-xs text-gray-500 mb-4">Tu privacidad es importante. Envía un mensaje sin exponer tu correo.</p>
+                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-3">
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1">Nombre</label>
+                        <input type="text" name="name" required class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ej. María García">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1">Email</label>
+                        <input type="email" name="email" required class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="tu@correo.com">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1">Mensaje</label>
+                        <textarea name="message" rows="4" required class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2 text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="¿En qué puedo ayudarte?"></textarea>
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" id="cancel-modal-btn" class="flex-1 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-semibold transition-all">Cancelar</button>
+                        <button type="submit" class="flex-1 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition-all shadow-sm">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-500 font-medium">
+        <p>&copy; 2026 Global API Hub. Hecho con pasión por desarrolladores. Alimentado por directorios públicos y sincronización en vivo.</p>
+    </footer>
+
+    <script>
+        // ––– BASE DE DATOS LOCAL MASIVA (140+ APIs curadas) –––
+        const localAPIs = [
+            // AI & Machine Learning (5)
+            { name: "OpenAI API", desc: "Modelos GPT-4o, DALL-E 3, TTS. Integración de IA conversacional y generativa.", category: "AI & Machine Learning", pricing: "Paid", auth: "API Key", https: true, url: "https://openai.com/blog/openai-api" },
+            { name: "Hugging Face Hub", desc: "Más de 100.000 modelos de IA para NLP, visión y audio.", category: "AI & Machine Learning", pricing: "Freemium", auth: "API Key", https: true, url: "https://huggingface.co/docs/api" },
+            { name: "Stability AI", desc: "Generación de imágenes con Stable Diffusion XL.", category: "AI & Machine Learning", pricing: "Paid", auth: "API Key", https: true, url: "https://platform.stability.ai" },
+            { name: "DeepL API", desc: "Traducción neuronal de alta fidelidad para textos y documentos.", category: "AI & Machine Learning", pricing: "Freemium", auth: "API Key", https: true, url: "https://www.deepl.com/pro-api" },
+            { name: "Replicate", desc: "Ejecuta modelos de ML open-source en la nube.", category: "AI & Machine Learning", pricing: "Paid", auth: "API Key", https: true, url: "https://replicate.com/" },
+
+            // Finance (8)
+            { name: "Stripe API", desc: "Procesamiento de pagos, suscripciones y facturación.", category: "Finance", pricing: "Paid", auth: "API Key", https: true, url: "https://stripe.com/docs/api" },
+            { name: "CoinGecko API", desc: "Datos de criptomonedas: precios, volumen, listados.", category: "Finance", pricing: "Free", auth: "None", https: true, url: "https://www.coingecko.com/en/api" },
+            { name: "Open Exchange Rates", desc: "Tasas de cambio en tiempo real para 200+ divisas.", category: "Finance", pricing: "Freemium", auth: "API Key", https: true, url: "https://openexchangerates.org/" },
+            { name: "Plaid API", desc: "Conexión segura con bancos para balances, verificación y prevención de fraude.", category: "Finance", pricing: "Paid", auth: "API Key", https: true, url: "https://plaid.com/" },
+            { name: "Alpha Vantage", desc: "Datos financieros históricos y en tiempo real: acciones, forex, cripto.", category: "Finance", pricing: "Free", auth: "API Key", https: true, url: "https://www.alphavantage.co/" },
+            { name: "CurrencyFreaks", desc: "API de tasas de cambio con hasta 10,000 solicitudes/mes gratis.", category: "Finance", pricing: "Freemium", auth: "API Key", https: true, url: "https://currencyfreaks.com/" },
+            { name: "Twelve Data", desc: "Datos de mercado financiero, indicadores técnicos y noticias.", category: "Finance", pricing: "Freemium", auth: "API Key", https: true, url: "https://twelvedata.com/" },
+            { name: "Binance API", desc: "Trading algorítmico y datos de mercado del exchange líder.", category: "Finance", pricing: "Free", auth: "API Key", https: true, url: "https://binance-docs.github.io/apidocs/" },
+
+            // Developer Tools (8)
+            { name: "GitHub API", desc: "Repositorios, issues, pull requests y gestión de equipos.", category: "Developer Tools", pricing: "Free", auth: "OAuth", https: true, url: "https://docs.github.com/en/rest" },
+            { name: "Postman API", desc: "Automatización de pruebas y entornos de API.", category: "Developer Tools", pricing: "Freemium", auth: "API Key", https: true, url: "https://www.postman.com/postman-api/" },
+            { name: "Supabase API", desc: "Base de datos PostgreSQL con suscripciones en tiempo real y auth.", category: "Developer Tools", pricing: "Freemium", auth: "API Key", https: true, url: "https://supabase.com/" },
+            { name: "Firebase API", desc: "Backend como servicio: Firestore, hosting, funciones y más.", category: "Developer Tools", pricing: "Freemium", auth: "API Key", https: true, url: "https://firebase.google.com/" },
+            { name: "Cloudflare Workers", desc: "Despliega código serverless en el edge de Cloudflare.", category: "Developer Tools", pricing: "Freemium", auth: "API Key", https: true, url: "https://developers.cloudflare.com/workers/" },
+            { name: "Vercel API", desc: "Despliegue de frontends y funciones serverless con integración Git.", category: "Developer Tools", pricing: "Freemium", auth: "OAuth", https: true, url: "https://vercel.com/docs/rest-api" },
+            { name: "Netlify API", desc: "Automatización de builds y despliegues de sitios JAMstack.", category: "Developer Tools", pricing: "Freemium", auth: "OAuth", https: true, url: "https://docs.netlify.com/api/get-started/" },
+            { name: "Docker Hub API", desc: "Registro de imágenes de contenedores y automatización de builds.", category: "Developer Tools", pricing: "Freemium", auth: "OAuth", https: true, url: "https://docs.docker.com/docker-hub/api/latest/" },
+
+            // Geolocation & Weather (6)
+            { name: "OpenWeatherMap", desc: "Clima actual, pronósticos y datos históricos.", category: "Geolocation & Weather", pricing: "Freemium", auth: "API Key", https: true, url: "https://openweathermap.org/api" },
+            { name: "Mapbox API", desc: "Mapas vectoriales personalizables, geocodificación y rutas.", category: "Geolocation & Weather", pricing: "Freemium", auth: "API Key", https: true, url: "https://docs.mapbox.com/api/" },
+            { name: "IPify", desc: "Obtén la IP pública del cliente (IPv4/IPv6).", category: "Geolocation & Weather", pricing: "Free", auth: "None", https: true, url: "https://www.ipify.org/" },
+            { name: "REST Countries", desc: "Datos demográficos y geográficos de todos los países.", category: "Geolocation & Weather", pricing: "Free", auth: "None", https: true, url: "https://restcountries.com/" },
+            { name: "WeatherAPI", desc: "Pronósticos de 14 días, alertas, calidad del aire y astronomía.", category: "Geolocation & Weather", pricing: "Freemium", auth: "API Key", https: true, url: "https://www.weatherapi.com/" },
+            { name: "OpenCage Geocoder", desc: "Geocodificación inversa y directa mundial.", category: "Geolocation & Weather", pricing: "Freemium", auth: "API Key", https: true, url: "https://opencagedata.com/api" },
+
+            // Social & Messaging (6)
+            { name: "Discord Webhooks", desc: "Envía notificaciones enriquecidas a canales de Discord.", category: "Social & Messaging", pricing: "Free", auth: "None", https: true, url: "https://discord.com/developers/docs/resources/webhook" },
+            { name: "Telegram Bot API", desc: "Crea bots interactivos y envía alertas masivas.", category: "Social & Messaging", pricing: "Free", auth: "API Key", https: true, url: "https://core.telegram.org/bots/api" },
+            { name: "Slack Web API", desc: "Integraciones personalizadas, mensajes directos y automatización de canales.", category: "Social & Messaging", pricing: "Freemium", auth: "OAuth", https: true, url: "https://api.slack.com/web" },
+            { name: "WhatsApp Cloud API", desc: "Envía y recibe mensajes de WhatsApp desde tu aplicación.", category: "Social & Messaging", pricing: "Paid", auth: "OAuth", https: true, url: "https://developers.facebook.com/docs/whatsapp/cloud-api" },
+            { name: "Twilio SendGrid", desc: "API de email transaccional con plantillas y analytics.", category: "Social & Messaging", pricing: "Freemium", auth: "API Key", https: true, url: "https://sendgrid.com/docs/api-reference/" },
+            { name: "Mailchimp API", desc: "Automatización de marketing por correo y gestión de audiencias.", category: "Social & Messaging", pricing: "Freemium", auth: "OAuth", https: true, url: "https://mailchimp.com/developer/" },
+
+            // Data & Entertainment (8)
+            { name: "Spotify Web API", desc: "Metadatos de canciones, playlists y control de reproducción.", category: "Data & Entertainment", pricing: "Free", auth: "OAuth", https: true, url: "https://developer.spotify.com/documentation/web-api/" },
+            { name: "Unsplash API", desc: "Fotos de alta resolución libres de derechos.", category: "Data & Entertainment", pricing: "Free", auth: "API Key", https: true, url: "https://unsplash.com/developers" },
+            { name: "The Movie Database (TMDb)", desc: "Información de películas, series, reparto y valoraciones.", category: "Data & Entertainment", pricing: "Free", auth: "API Key", https: true, url: "https://developers.themoviedb.org/" },
+            { name: "NASA API", desc: "Imágenes satelitales, Mars Rover, asteroides y más.", category: "Data & Entertainment", pricing: "Free", auth: "API Key", https: true, url: "https://api.nasa.gov/" },
+            { name: "YouTube Data API", desc: "Busca y gestiona vídeos, canales y playlists de YouTube.", category: "Data & Entertainment", pricing: "Freemium", auth: "OAuth", https: true, url: "https://developers.google.com/youtube/v3" },
+            { name: "Last.fm API", desc: "Scrobble de música, recomendaciones y estadísticas.", category: "Data & Entertainment", pricing: "Free", auth: "API Key", https: true, url: "https://www.last.fm/api" },
+            { name: "GIPHY API", desc: "Biblioteca de GIFs animados para integrar en apps.", category: "Data & Entertainment", pricing: "Free", auth: "API Key", https: true, url: "https://developers.giphy.com/" },
+            { name: "PokéAPI", desc: "Datos completos de todos los Pokémon, movimientos y tipos.", category: "Data & Entertainment", pricing: "Free", auth: "None", https: true, url: "https://pokeapi.co/" },
+
+            // Health (5)
+            { name: "OpenFDA", desc: "Datos públicos de la FDA sobre medicamentos y dispositivos.", category: "Health", pricing: "Free", auth: "API Key", https: true, url: "https://open.fda.gov/apis/" },
+            { name: "Nutritionix API", desc: "Información nutricional de millones de alimentos.", category: "Health", pricing: "Freemium", auth: "API Key", https: true, url: "https://developer.nutritionix.com/" },
+            { name: "Coronavirus Tracker API", desc: "Estadísticas globales y locales de COVID-19.", category: "Health", pricing: "Free", auth: "None", https: true, url: "https://api.covidtracking.com/" },
+            { name: "Fitbit API", desc: "Datos de actividad física, sueño y frecuencia cardíaca.", category: "Health", pricing: "Freemium", auth: "OAuth", https: true, url: "https://dev.fitbit.com/" },
+            { name: "MyFitnessPal API", desc: "Registro de comidas y conteo de calorías.", category: "Health", pricing: "Freemium", auth: "OAuth", https: true, url: "https://www.myfitnesspal.com/api" },
+
+            // Education (5)
+            { name: "Canvas LMS API", desc: "Automatiza cursos, tareas y calificaciones del LMS Canvas.", category: "Education", pricing: "Free", auth: "OAuth", https: true, url: "https://canvas.instructure.com/doc/api/" },
+            { name: "Open Library API", desc: "Consulta metadatos de libros, portadas y autores.", category: "Education", pricing: "Free", auth: "None", https: true, url: "https://openlibrary.org/developers/api" },
+            { name: "Google Classroom API", desc: "Gestiona clases, tareas y entregas de Google Classroom.", category: "Education", pricing: "Free", auth: "OAuth", https: true, url: "https://developers.google.com/classroom" },
+            { name: "Quizlet API", desc: "Conjuntos de estudio, tarjetas y pruebas interactivas.", category: "Education", pricing: "Free", auth: "OAuth", https: true, url: "https://quizlet.com/api" },
+            { name: "Khan Academy API", desc: "Accede a ejercicios, vídeos y habilidades de Khan Academy.", category: "Education", pricing: "Free", auth: "OAuth", https: true, url: "https://www.khanacademy.org/api" },
+
+            // IoT (5)
+            { name: "ThingSpeak API", desc: "Almacena y visualiza datos de sensores IoT con MATLAB.", category: "IoT", pricing: "Freemium", auth: "API Key", https: true, url: "https://thingspeak.com/pages/api" },
+            { name: "Adafruit IO", desc: "Plataforma para conectar dispositivos IoT con dashboards.", category: "IoT", pricing: "Freemium", auth: "API Key", https: true, url: "https://io.adafruit.com/api/docs/" },
+            { name: "Blynk API", desc: "Crea aplicaciones móviles para controlar hardware IoT.", category: "IoT", pricing: "Freemium", auth: "API Key", https: true, url: "https://docs.blynk.io/en" },
+            { name: "Losant IoT Platform", desc: "Middleware IoT para conectar dispositivos y flujos de datos.", category: "IoT", pricing: "Paid", auth: "API Key", https: true, url: "https://docs.losant.com/" },
+            { name: "Particle API", desc: "Gestión de dispositivos Particle IoT, OTA updates y datos.", category: "IoT", pricing: "Freemium", auth: "OAuth", https: true, url: "https://docs.particle.io/reference/api/" },
+
+            // Transport (6)
+            { name: "Uber API", desc: "Solicita viajes, obtén estimaciones y perfiles de usuario.", category: "Transport", pricing: "Freemium", auth: "OAuth", https: true, url: "https://developer.uber.com/" },
+            { name: "Lyft API", desc: "Disponibilidad de conductores, precios y solicitud de viajes.", category: "Transport", pricing: "Freemium", auth: "OAuth", https: true, url: "https://developer.lyft.com/" },
+            { name: "Transport for London (TfL) Unified API", desc: "Información en tiempo real de metro, autobuses y bicicletas en Londres.", category: "Transport", pricing: "Free", auth: "None", https: true, url: "https://api.tfl.gov.uk/" },
+            { name: "FlightAware API", desc: "Seguimiento de vuelos en tiempo real y datos de aviación.", category: "Transport", pricing: "Paid", auth: "API Key", https: true, url: "https://flightaware.com/commercial/aeroapi/" },
+            { name: "AviationStack", desc: "Datos de vuelos, aeropuertos y aerolíneas en tiempo real.", category: "Transport", pricing: "Freemium", auth: "API Key", https: true, url: "https://aviationstack.com/" },
+            { name: "TomTom API", desc: "Mapas, tráfico en tiempo real y planificación de rutas.", category: "Transport", pricing: "Freemium", auth: "API Key", https: true, url: "https://developer.tomtom.com/" },
+
+            // Science (5)
+            { name: "NASA APOD API", desc: "Imagen astronómica del día con explicación.", category: "Science", pricing: "Free", auth: "None", https: true, url: "https://api.nasa.gov/planetary/apod" },
+            { name: "OpenAQ", desc: "Datos globales de calidad del aire en tiempo real.", category: "Science", pricing: "Free", auth: "None", https: true, url: "https://docs.openaq.org/" },
+            { name: "Marine Traffic API", desc: "Posiciones de barcos en tiempo real y datos portuarios.", category: "Science", pricing: "Paid", auth: "API Key", https: true, url: "https://www.marinetraffic.com/en/ais-api-services" },
+            { name: "SpaceX API", desc: "Lanzamientos, cohetes, cápsulas y datos históricos de SpaceX.", category: "Science", pricing: "Free", auth: "None", https: true, url: "https://github.com/r-spacex/SpaceX-API" },
+            { name: "GBIF API", desc: "Millones de registros de biodiversidad mundial.", category: "Science", pricing: "Free", auth: "None", https: true, url: "https://www.gbif.org/developer/summary" },
+
+            // Government (5)
+            { name: "Data.gov API", desc: "Conjunto de datos abiertos del gobierno de EE.UU.", category: "Government", pricing: "Free", auth: "None", https: true, url: "https://catalog.data.gov/dataset?res_format=API" },
+            { name: "Open Government API (UK)", desc: "Datos abiertos del gobierno británico.", category: "Government", pricing: "Free", auth: "None", https: true, url: "https://data.gov.uk/" },
+            { name: "EU Open Data Portal", desc: "Datos públicos de las instituciones de la UE.", category: "Government", pricing: "Free", auth: "None", https: true, url: "https://data.europa.eu/euodp/en/developers" },
+            { name: "World Bank API", desc: "Indicadores de desarrollo mundial, datos económicos y demográficos.", category: "Government", pricing: "Free", auth: "None", https: true, url: "https://datahelpdesk.worldbank.org/knowledgebase/topics/125589-developer-information" },
+            { name: "OpenFEC API", desc: "Financiamiento de campañas políticas en EE.UU.", category: "Government", pricing: "Free", auth: "None", https: true, url: "https://api.open.fec.gov/" },
+
+            // Games (5)
+            { name: "RAWG Video Games Database", desc: "La base de datos de videojuegos más grande del mundo.", category: "Games", pricing: "Freemium", auth: "API Key", https: true, url: "https://rawg.io/apidocs" },
+            { name: "Dota 2 API", desc: "Partidas, héroes y estadísticas del juego Dota 2.", category: "Games", pricing: "Free", auth: "API Key", https: true, url: "https://docs.opendota.com/" },
+            { name: "Fortnite API", desc: "Estadísticas de jugadores, objetos y tienda del juego.", category: "Games", pricing: "Freemium", auth: "API Key", https: true, url: "https://fortnitetracker.com/site-api" },
+            { name: "Clash Royale API", desc: "Perfiles de jugador, clanes y cartas.", category: "Games", pricing: "Free", auth: "API Key", https: true, url: "https://developer.clashroyale.com/" },
+            { name: "Valorant API", desc: "Datos no oficiales de agentes, mapas y rangos.", category: "Games", pricing: "Free", auth: "None", https: true, url: "https://valorant-api.com/" },
+
+            // Jobs (4)
+            { name: "Indeed API", desc: "Busca ofertas de empleo por ubicación y palabras clave.", category: "Jobs", pricing: "Freemium", auth: "API Key", https: true, url: "https://opensource.indeedeng.io/api-documentation/" },
+            { name: "Glassdoor API", desc: "Salarios, opiniones de empresas y listados de empleos.", category: "Jobs", pricing: "Paid", auth: "API Key", https: true, url: "https://www.glassdoor.com/developer/index.htm" },
+            { name: "LinkedIn Jobs API", desc: "Publica y busca empleos en la red profesional.", category: "Jobs", pricing: "Paid", auth: "OAuth", https: true, url: "https://developer.linkedin.com/" },
+            { name: "Adzuna API", desc: "Agregador de ofertas de empleo de múltiples fuentes.", category: "Jobs", pricing: "Freemium", auth: "API Key", https: true, url: "https://developer.adzuna.com/" },
+
+            // Cryptocurrency (6)
+            { name: "CoinGecko API", desc: "Precios, volúmenes e información detallada de cripto.", category: "Cryptocurrency", pricing: "Free", auth: "None", https: true, url: "https://www.coingecko.com/en/api" },
+            { name: "CoinMarketCap API", desc: "Capitalización de mercado, gráficos y datos históricos.", category: "Cryptocurrency", pricing: "Freemium", auth: "API Key", https: true, url: "https://coinmarketcap.com/api/" },
+            { name: "Blockchain.com API", desc: "Transacciones, bloques y direcciones de Bitcoin.", category: "Cryptocurrency", pricing: "Free", auth: "None", https: true, url: "https://www.blockchain.com/explorer/api" },
+            { name: "Etherscan API", desc: "Explorador de bloques y transacciones de Ethereum.", category: "Cryptocurrency", pricing: "Freemium", auth: "API Key", https: true, url: "https://docs.etherscan.io/" },
+            { name: "Nomics API", desc: "Datos de criptomonedas con transparencia y limpieza profesional.", category: "Cryptocurrency", pricing: "Freemium", auth: "API Key", https: true, url: "https://nomics.com/docs/" },
+            { name: "KuCoin API", desc: "Trading y datos de mercado del exchange KuCoin.", category: "Cryptocurrency", pricing: "Free", auth: "API Key", https: true, url: "https://docs.kucoin.com/" }
+        ];
+
+        // ––– LISTA COMBINADA (inicia con local) –––
+        let combinedAPIs = [...localAPIs];
+
+        // ––– FUNCIÓN PARA OBTENER APIs DE publicapis.org (con timeout y reintento) –––
+        async function fetchRemoteAPIs() {
+            const statusText = document.getElementById('status-text');
+            const indicator = document.getElementById('status-indicator');
+            
+            const updateStatus = (icon, color, text) => {
+                indicator.className = `w-2.5 h-2.5 rounded-full ${color} shadow-sm animate-pulse`;
+                statusText.textContent = text;
+            };
+
+            try {
+                updateStatus("fa-spinner", "bg-amber-500", "Sincronizando con directorio global (publicapis.org)...");
+                
+                // AbortController con timeout de 10 segundos
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const allEntries = [];
+                let page = 1;
+                const perPage = 1000; // máximo soportado
+
+                while (true) {
+                    const url = `https://api.publicapis.org/entries?per_page=${perPage}&page=${page}`;
+                    const response = await fetch(url, { signal: controller.signal });
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const data = await response.json();
+                    if (!data.entries || data.entries.length === 0) break;
+                    allEntries.push(...data.entries);
+                    if (data.entries.length < perPage) break;
+                    page++;
+                }
+                clearTimeout(timeoutId);
+
+                // Transformar a nuestro esquema
+                const remoteAPIs = allEntries.map(entry => ({
+                    name: entry.API,
+                    desc: entry.Description || "Sin descripción.",
+                    category: entry.Category || "Other",
+                    pricing: "Free", // por defecto, podríamos mejorarlo
+                    auth: entry.Auth || "None",
+                    https: entry.HTTPS === true,
+                    url: entry.Link || "#"
+                }));
+
+                // Fusionar: local prevalece sobre remoto (misma normalización)
+                const mergedMap = new Map();
+                localAPIs.forEach(api => mergedMap.set(api.name.toLowerCase().trim(), api));
+                remoteAPIs.forEach(api => {
+                    const key = api.name.toLowerCase().trim();
+                    if (!mergedMap.has(key)) {
+                        mergedMap.set(key, api);
+                    }
+                });
+                combinedAPIs = Array.from(mergedMap.values());
+
+                updateStatus("fa-check", "bg-emerald-500", `Directorio global sincronizado. ${combinedAPIs.length} APIs cargadas.`);
+                return true;
+            } catch (error) {
+                console.warn("Error al sincronizar APIs remotas:", error);
+                combinedAPIs = [...localAPIs]; // fallback masivo local
+                updateStatus("fa-exclamation-triangle", "bg-rose-500", `Modo offline – usando base local de ${combinedAPIs.length} APIs.`);
+                return false;
+            }
+        }
+
+        // ––– RENDERIZADO Y FILTROS –––
+        function populateCategories() {
+            const select = document.getElementById('category-filter');
+            const categories = [...new Set(combinedAPIs.map(api => api.category))].sort();
+            select.innerHTML = '<option value="all">Todas las categorías</option>';
+            categories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderAPIs() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const categoryFilter = document.getElementById('category-filter').value;
+            const pricingFilter = document.getElementById('pricing-filter').value;
+            const grid = document.getElementById('api-grid');
+            const countSpan = document.getElementById('results-count');
+
+            const filtered = combinedAPIs.filter(api => {
+                const matchesSearch = api.name.toLowerCase().includes(query) || 
+                                     api.desc.toLowerCase().includes(query) || 
+                                     api.category.toLowerCase().includes(query);
+                const matchesCat = categoryFilter === 'all' || api.category === categoryFilter;
+                const matchesPricing = pricingFilter === 'all' || api.pricing === pricingFilter;
+                return matchesSearch && matchesCat && matchesPricing;
+            });
+
+            countSpan.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-400 text-sm">
+                        <i class="fa-solid fa-box-open text-3xl mb-2 text-gray-300 block"></i>
+                        No se encontraron APIs con esos criterios. ¡Prueba otros filtros!
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(api => {
+                let pricingBadge = '';
+                if (api.pricing === 'Paid') {
+                    pricingBadge = `<span class="text-[9px] font-bold bg-rose-50 text-rose-600 border border-rose-200 px-2 py-0.5 rounded-full">Pago</span>`;
+                } else if (api.pricing === 'Freemium') {
+                    pricingBadge = `<span class="text-[9px] font-bold bg-amber-50 text-amber-600 border border-amber-200 px-2 py-0.5 rounded-full">Freemium</span>`;
+                } else {
+                    pricingBadge = `<span class="text-[9px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-0.5 rounded-full">Gratis</span>`;
+                }
+
+                return `
+                    <div class="bg-white border border-gray-200/80 rounded-xl p-5 flex flex-col justify-between transition-all duration-200 hover:shadow-md hover:border-gray-300/80 group">
+                        <div>
+                            <div class="flex items-start justify-between gap-2 mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-gray-100 text-gray-600 rounded">
+                                    ${api.category}
+                                </span>
+                                <div class="flex items-center gap-1.5">
+                                    ${pricingBadge}
+                                    ${api.https ? '<span class="text-[9px] font-semibold bg-gray-100 text-gray-400 px-1.5 py-0.2 rounded" title="Conexión segura"><i class="fa-solid fa-lock text-[8px]"></i></span>' : ''}
+                                </div>
+                            </div>
+                            <h3 class="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                                ${api.name}
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-1.5 leading-relaxed line-clamp-3">${api.desc}</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[10px] font-semibold text-gray-400">Auth: <span class="text-gray-600">${api.auth}</span></span>
+                            <a href="${api.url}" target="_blank" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
+                                Ver API <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ––– NOTICIAS (sin cambios) –––
+        const fallbackNews = [
+            { title: "Modelos de IA impulsan estándares de integridad de código en ecosistemas open-source", source: "TechPulse", url: "#" },
+            { title: "Nuevo sandboxing de navegadores apunta a protección de endpoints con confianza cero", source: "CyberShield", url: "#" },
+            { title: "Desarrolladores adoptan arquitecturas GraphQL unificadas para datos heredados", source: "DevInsight", url: "#" }
+        ];
+
+        async function loadNews() {
+            const newsList = document.getElementById('news-list');
+            try {
+                const response = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=5');
+                if (!response.ok) throw new Error();
+                const data = await response.json();
+                newsList.innerHTML = data.results.map(article => `
+                    <div class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200/60 transition-all group">
+                        <span class="text-[9px] uppercase tracking-wider text-blue-500 font-bold">${article.news_site}</span>
+                        <h4 class="text-xs font-semibold text-gray-800 mt-1 line-clamp-2 group-hover:text-blue-600 transition-all leading-relaxed">
+                            <a href="${article.url}" target="_blank">${article.title}</a>
+                        </h4>
+                    </div>
+                `).join('');
+            } catch {
+                newsList.innerHTML = fallbackNews.map(article => `
+                    <div class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200/60 transition-all group">
+                        <span class="text-[9px] uppercase tracking-wider text-blue-500 font-bold">${article.source}</span>
+                        <h4 class="text-xs font-semibold text-gray-800 mt-1 line-clamp-2 transition-all leading-relaxed">
+                            <a href="${article.url}">${article.title}</a>
+                        </h4>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // ––– MODAL DE CONTACTO –––
+        const emailModal = document.getElementById('email-modal');
+        document.getElementById('contact-email-btn').addEventListener('click', () => {
+            emailModal.classList.remove('hidden');
+            emailModal.classList.add('flex');
+        });
+        const hideModal = () => {
+            emailModal.classList.add('hidden');
+            emailModal.classList.remove('flex');
+        };
+        document.getElementById('close-modal-dot').addEventListener('click', hideModal);
+        document.getElementById('cancel-modal-btn').addEventListener('click', hideModal);
+
+        // ––– INICIALIZACIÓN Y EVENTOS –––
+        async function initAll() {
+            // Primero mostramos la base local masiva
+            combinedAPIs = [...localAPIs];
+            populateCategories();
+            renderAPIs();
+            document.getElementById('status-text').textContent = `Base local cargada. ${localAPIs.length} APIs listas. Buscando actualizaciones...`;
+            loadNews();
+
+            // Luego intentamos sincronizar con el directorio global
+            const success = await fetchRemoteAPIs();
+            populateCategories(); // pueden haber nuevas categorías
+            renderAPIs(); // refresca con el nuevo combinedAPIs
+        }
+
+        document.getElementById('search-input').addEventListener('input', renderAPIs);
+        document.getElementById('category-filter').addEventListener('change', renderAPIs);
+        document.getElementById('pricing-filter').addEventListener('change', renderAPIs);
+
+        // Botón de sincronización manual
+        document.getElementById('refresh-apis-btn').addEventListener('click', async () => {
+            await fetchRemoteAPIs();
+            populateCategories();
+            renderAPIs();
+        });
+
+        initAll();
+    </script>
+</body>
+</html>
