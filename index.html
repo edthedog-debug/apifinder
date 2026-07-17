@@ -28,8 +28,6 @@
         *{box-sizing:border-box}
         body{font-family:'Inter',system-ui,sans-serif;background:#F1F5F9;color:#1E293B;margin:0;padding:0}
         .api-card{transition:all 0.15s ease}
-        .tv-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;background:#000}
-        .tv-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px}
         .gradient-text{background:linear-gradient(135deg,#3B82F6,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .news-scroll{scrollbar-width:thin;scrollbar-color:#CBD5E1 transparent;max-height:400px;overflow-y:auto}
         .news-scroll::-webkit-scrollbar{width:4px}
@@ -52,7 +50,7 @@
                 <button onclick="manualSync()" class="bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full font-semibold text-[10px] hover:bg-blue-100 transition-all">
                     <i class="fa-solid fa-sync-alt mr-1"></i> Sync
                 </button>
-                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v19</span>
+                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v20</span>
             </div>
         </div>
     </header>
@@ -118,44 +116,7 @@
         <!-- Right Column -->
         <aside class="lg:col-span-4 flex flex-col gap-3">
             
-            <!-- TV Player (Yahoo Finance Live) -->
-            <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
-                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2 mb-2">
-                    <span class="w-2 h-2 rounded-full bg-purple-500 live-dot"></span>
-                    Yahoo Finance Live TV
-                </h3>
-                <div class="tv-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/4dddoAJkOqM?autoplay=1&mute=1&controls=1&rel=0"
-                        allow="autoplay; encrypted-media; picture-in-picture"
-                        allowfullscreen
-                        loading="lazy"
-                        title="Yahoo Finance Live TV">
-                    </iframe>
-                </div>
-                <p class="text-[9px] text-gray-400 mt-1.5 text-center">Yahoo Finance • 24/7 Live Market Coverage</p>
-            </div>
-
-            <!-- News Section -->
-            <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-sm font-bold text-gray-950">
-                        <i class="fa-solid fa-newspaper text-blue-500 mr-1"></i>
-                        Latest News
-                    </h3>
-                    <button onclick="refreshNews()" class="text-[9px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-semibold hover:bg-blue-100 transition-all">
-                        <i class="fa-solid fa-rotate mr-1"></i> Refresh
-                    </button>
-                </div>
-                <div id="news-list" class="space-y-2 news-scroll">
-                    <div class="text-center py-8">
-                        <i class="fa-solid fa-spinner fa-spin text-blue-500 text-xl mb-2 block"></i>
-                        <p class="text-xs text-gray-500">Loading latest news...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Support -->
+            <!-- Support Card (MOVED TO TOP) -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900">
                     <i class="fa-solid fa-heart text-red-500 mr-1"></i>
@@ -178,6 +139,25 @@
                     <a href="https://github.com" target="_blank" rel="noopener" class="flex-1 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-[10px] font-semibold text-center transition-all border border-gray-200">
                         <i class="fa-brands fa-github mr-1"></i> GitHub
                     </a>
+                </div>
+            </div>
+
+            <!-- News Section -->
+            <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-gray-950">
+                        <i class="fa-solid fa-newspaper text-blue-500 mr-1"></i>
+                        Latest News
+                    </h3>
+                    <button onclick="refreshNews()" class="text-[9px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-semibold hover:bg-blue-100 transition-all">
+                        <i class="fa-solid fa-rotate mr-1"></i> Refresh
+                    </button>
+                </div>
+                <div id="news-list" class="space-y-2 news-scroll">
+                    <div class="text-center py-8">
+                        <i class="fa-solid fa-spinner fa-spin text-blue-500 text-xl mb-2 block"></i>
+                        <p class="text-xs text-gray-500">Loading latest news...</p>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -204,7 +184,7 @@
     </footer>
 
     <script>
-        // ––– DATOS DE APIs –––
+        // ––– API DATA –––
         const API_URLS = {
             "GitHub":"https://docs.github.com/en/rest","OpenAI":"https://platform.openai.com/docs/api-reference",
             "Stripe":"https://stripe.com/docs/api","Google Maps":"https://developers.google.com/maps",
@@ -263,7 +243,7 @@
         const PRICING = ["Free","Freemium","Paid"];
         const AUTH = ["None","API Key","OAuth","JWT","Basic"];
 
-        // ––– GENERAR APIs –––
+        // ––– GENERATE APIs –––
         const allAPIs = [];
         for (let i = 0; i < TOTAL; i++) {
             const nameIdx = i % NAMES.length;
@@ -279,12 +259,12 @@
             });
         }
 
-        // ––– ESTADO –––
+        // ––– STATE –––
         let filteredResults = allAPIs;
         let displayOffset = 0;
         const CHUNK = 50;
 
-        // ––– INICIAR –––
+        // ––– INITIALIZE –––
         function init() {
             populateCategories();
             renderResults();
@@ -394,7 +374,7 @@
             setTimeout(() => { b.innerHTML = '<i class="fa-solid fa-sync-alt mr-1"></i> Sync'; b.disabled = false; }, 500);
         }
 
-        // ––– NOTICIAS DINÁMICAS –––
+        // ––– DYNAMIC NEWS –––
         const fallbackNews = [
             {title:"S&P 500 Hits All-Time High as Tech Stocks Rally",source:"Yahoo Finance",category:"Finance",url:"https://finance.yahoo.com"},
             {title:"Federal Reserve Signals Rate Cuts for Q3 2026",source:"Reuters",category:"Finance",url:"https://www.reuters.com"},
@@ -476,7 +456,7 @@
             m.classList.add('hidden'); m.classList.remove('flex');
         }
 
-        // ––– INICIAR –––
+        // ––– START –––
         init();
     </script>
 </body>
