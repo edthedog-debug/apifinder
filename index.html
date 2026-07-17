@@ -7,15 +7,11 @@
     <meta name="theme-color" content="#3B82F6">
     <meta name="color-scheme" content="light">
 
-    <!-- ––– META TAGS ULTRA-OPTIMIZADOS PARA API FINDER ––– -->
+    <!-- ––– META TAGS ––– -->
     <title>API Finder ⚡ | Find 100,000+ Public APIs Instantly – Free API Search Engine</title>
-    <meta name="description" content="API Finder is the world's largest public API search engine. Instantly find 100,000+ REST APIs across 50+ categories. Free, fast, and always up-to-date. The #1 API directory for developers." />
-    <meta name="keywords" content="API finder, find APIs, public API search, free API directory, REST API finder, API search engine, discover APIs, API marketplace, API catalog, find REST APIs, web API directory, API list, developer APIs, open API finder, JSON API search" />
-    <meta name="author" content="API Finder" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
-    <meta name="bingbot" content="index, follow" />
-    <meta name="duckduckgo" content="index, follow" />
+    <meta name="description" content="API Finder is the world's largest public API search engine. Instantly find 100,000+ REST APIs across 50+ categories. Free, fast, and always up-to-date." />
+    <meta name="keywords" content="API finder, find APIs, public API search, free API directory, REST API finder, API search engine" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.apifinder.com/" />
 
     <!-- Open Graph -->
@@ -23,114 +19,80 @@
     <meta property="og:description" content="The #1 API finder and search engine. 100K+ entries, 50+ categories, instant search." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.apifinder.com/" />
-    <meta property="og:image" content="https://www.apifinder.com/og-image.png" />
-    <meta property="og:site_name" content="API Finder" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="API Finder ⚡ – Find 100,000+ Public APIs Instantly" />
-    <meta name="twitter:description" content="The most complete API finder. 100K+ built-in with automatic updates." />
-    <meta name="twitter:image" content="https://www.apifinder.com/twitter-card.png" />
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "API Finder",
-      "url": "https://www.apifinder.com",
-      "description": "The world's fastest API search engine with 100,000+ built-in entries.",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "All",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "ratingCount": "3847" }
-    }
-    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        *,*::before,*::after{box-sizing:border-box}
-        body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#F1F5F9;color:#1E293B;margin:0;padding:0;-webkit-font-smoothing:antialiased}
-        .api-card{break-inside:avoid;transition:all 0.15s ease}
+        *{box-sizing:border-box}
+        body{font-family:'Inter',system-ui,sans-serif;background:#F1F5F9;color:#1E293B;margin:0;padding:0}
+        .api-card{transition:all 0.15s ease}
         .tv-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;background:#000}
         .tv-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px}
         .gradient-text{background:linear-gradient(135deg,#3B82F6,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .news-scroll{scrollbar-width:thin;scrollbar-color:#CBD5E1 transparent}
+        .news-scroll{scrollbar-width:thin;scrollbar-color:#CBD5E1 transparent;max-height:400px;overflow-y:auto}
         .news-scroll::-webkit-scrollbar{width:4px}
         .news-scroll::-webkit-scrollbar-track{background:transparent}
         .news-scroll::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:10px}
-        .news-category-badge{font-size:7px;padding:2px 6px;border-radius:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
-        .live-indicator{animation:blink 1.5s infinite}
+        .live-dot{animation:blink 1.5s infinite}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <!-- Top Bar -->
-    <header class="bg-white/95 backdrop-blur-md border-b border-gray-200/80 py-2 px-3 md:px-6 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 text-xs text-gray-600 font-medium">
-            <div class="flex items-center gap-2 min-w-0">
-                <span class="flex items-center gap-1.5 flex-shrink-0">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm live-indicator"></span>
-                    <span class="truncate font-semibold text-gray-700">100,000 APIs Ready</span>
-                </span>
-                <span class="hidden lg:inline text-gray-300">|</span>
-                <span class="hidden lg:inline text-gray-500 truncate"><i class="fa-solid fa-bolt text-amber-500 mr-1"></i> Instant Search</span>
+    <header class="bg-white/95 backdrop-blur-md border-b border-gray-200/80 py-2 px-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between text-xs text-gray-600 font-medium">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm live-dot"></span>
+                <span class="font-semibold text-gray-700">100,000 APIs Ready</span>
             </div>
-            <div class="flex items-center gap-2 flex-shrink-0">
+            <div class="flex items-center gap-2">
                 <button onclick="manualSync()" class="bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full font-semibold text-[10px] hover:bg-blue-100 transition-all">
                     <i class="fa-solid fa-sync-alt mr-1"></i> Sync
                 </button>
-                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v17</span>
+                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v18</span>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl w-full mx-auto p-3 md:p-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
+    <main class="max-w-7xl w-full mx-auto p-3 md:p-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-4">
         
         <!-- Left Column -->
         <div class="lg:col-span-8 flex flex-col gap-4">
             
             <!-- Hero Search -->
-            <section class="p-5 md:p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-white border border-blue-200/60 shadow-md relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full -translate-y-1/2 translate-x-1/2 opacity-50"></div>
-                <div class="relative">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-xl">⚡</span>
-                        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-600 text-white rounded-full uppercase tracking-wider">100K+ APIs</span>
-                    </div>
-                    <h1 class="text-xl md:text-3xl font-black text-gray-900 tracking-tight">
-                        <span class="gradient-text">API Finder</span> ⚡
-                    </h1>
-                    <p class="text-gray-600 mt-1.5 text-xs md:text-sm max-w-xl leading-relaxed">
-                        The <strong>fastest API finder</strong> on the planet. <strong>100,000+ public APIs</strong> across 50+ categories. Find any API instantly.
-                    </p>
-                    <div class="mt-4 relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-blue-400 text-sm"></i>
-                        <input 
-                            type="search" 
-                            id="search-input"
-                            placeholder="Search APIs by name, description, or category..."
-                            autocomplete="off"
-                            class="w-full bg-white border-2 border-blue-200 rounded-xl py-3 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all shadow-lg"
-                        />
-                    </div>
+            <section class="p-5 md:p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-white border border-blue-200/60 shadow-md">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-xl">⚡</span>
+                    <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-600 text-white rounded-full uppercase">100K+ APIs</span>
+                </div>
+                <h1 class="text-xl md:text-3xl font-black text-gray-900 tracking-tight">
+                    <span class="gradient-text">API Finder</span> ⚡
+                </h1>
+                <p class="text-gray-600 mt-1.5 text-xs md:text-sm">
+                    The <strong>fastest API finder</strong> on the planet. <strong>100,000+ public APIs</strong> across 50+ categories.
+                </p>
+                <div class="mt-4 relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-blue-400 text-sm"></i>
+                    <input 
+                        type="search" 
+                        id="search-input"
+                        placeholder="Search APIs by name, description, or category..."
+                        autocomplete="off"
+                        class="w-full bg-white border-2 border-blue-200 rounded-xl py-3 pl-10 pr-4 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all shadow-lg"
+                    />
                 </div>
             </section>
 
             <!-- Results -->
             <section>
                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
-                        <i class="fa-solid fa-cubes text-gray-500"></i>
-                        Results: <span id="results-count" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700">0</span>
+                    <h2 class="text-sm font-bold text-gray-700">
+                        <i class="fa-solid fa-cubes text-gray-500 mr-1"></i>
+                        Results: <span id="results-count" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700">100,000</span>
                     </h2>
                     <div class="flex gap-2">
                         <select id="category-filter" class="bg-white border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-[140px]">
@@ -156,36 +118,36 @@
         <!-- Right Column -->
         <aside class="lg:col-span-4 flex flex-col gap-3">
             
-            <!-- TV Player (Bloomberg Business News Live YouTube) -->
+            <!-- TV Player -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2 mb-2">
-                    <span class="w-2 h-2 rounded-full bg-red-500 live-indicator"></span>
+                    <span class="w-2 h-2 rounded-full bg-red-500 live-dot"></span>
                     Bloomberg Live TV
                 </h3>
                 <div class="tv-container">
                     <iframe 
-                        src="https://www.youtube.com/embed/9Auq9mYxFEE?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1"
+                        src="https://www.youtube.com/embed/9Auq9mYxFEE?autoplay=1&mute=1&controls=1&rel=0"
                         allow="autoplay; encrypted-media; picture-in-picture"
                         allowfullscreen
                         loading="lazy"
                         title="Bloomberg Live TV">
                     </iframe>
                 </div>
-                <p class="text-[9px] text-gray-400 mt-1.5 text-center">Bloomberg Business • 24/7 Live</p>
+                <p class="text-[9px] text-gray-400 mt-1.5 text-center">Bloomberg Business • 24/7 Live Stream</p>
             </div>
 
-            <!-- News Section - DINÁMICO -->
-            <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm flex flex-col">
+            <!-- News Section -->
+            <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-sm font-bold text-gray-950 flex items-center gap-2">
-                        <i class="fa-solid fa-newspaper text-blue-500"></i>
+                    <h3 class="text-sm font-bold text-gray-950">
+                        <i class="fa-solid fa-newspaper text-blue-500 mr-1"></i>
                         Latest News
                     </h3>
                     <button onclick="refreshNews()" class="text-[9px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-semibold hover:bg-blue-100 transition-all">
                         <i class="fa-solid fa-rotate mr-1"></i> Refresh
                     </button>
                 </div>
-                <div id="news-list" class="space-y-2 flex-grow overflow-y-auto max-h-[500px] pr-1 news-scroll">
+                <div id="news-list" class="space-y-2 news-scroll">
                     <div class="text-center py-8">
                         <i class="fa-solid fa-spinner fa-spin text-blue-500 text-xl mb-2 block"></i>
                         <p class="text-xs text-gray-500">Loading latest news...</p>
@@ -193,15 +155,13 @@
                 </div>
             </div>
 
-            <!-- Support Card -->
+            <!-- Support -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
-                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fa-solid fa-heart text-red-500"></i>
+                <h3 class="text-sm font-bold text-gray-900">
+                    <i class="fa-solid fa-heart text-red-500 mr-1"></i>
                     Support API Finder
                 </h3>
-                <p class="text-gray-500 text-[10px] mt-1 leading-relaxed">
-                    We maintain 100K+ APIs with blazing-fast search. Help us keep it free!
-                </p>
+                <p class="text-gray-500 text-[10px] mt-1">We maintain 100K+ APIs. Help us keep it free!</p>
                 <div class="mt-2 space-y-1.5">
                     <a href="https://www.paypal.com" target="_blank" rel="noopener" class="block w-full py-1.5 px-3 bg-[#0070ba] hover:bg-[#005ea6] text-white font-semibold rounded-lg text-[10px] text-center transition-all">
                         <i class="fa-brands fa-paypal mr-1"></i> PayPal
@@ -239,12 +199,12 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-3 text-center text-[9px] text-gray-500 font-medium">
+    <footer class="bg-white border-t border-gray-200 py-3 text-center text-[9px] text-gray-500">
         <p>© 2026 API Finder ⚡ | 100,000+ Public APIs | The World's Fastest API Search Engine</p>
     </footer>
 
     <script>
-        // ––– URLs REALES –––
+        // ––– DATOS DE APIs –––
         const API_URLS = {
             "GitHub":"https://docs.github.com/en/rest","OpenAI":"https://platform.openai.com/docs/api-reference",
             "Stripe":"https://stripe.com/docs/api","Google Maps":"https://developers.google.com/maps",
@@ -263,77 +223,59 @@
             "Azure":"https://learn.microsoft.com/en-us/rest/api/azure","Cloudflare":"https://developers.cloudflare.com/api",
             "Vercel":"https://vercel.com/docs/rest-api","Netlify":"https://docs.netlify.com/api/get-started",
             "Sentry":"https://docs.sentry.io/api","Datadog":"https://docs.datadoghq.com/api/latest",
-            "Plaid":"https://plaid.com/docs/api","Tink":"https://docs.tink.com/api",
-            "TrueLayer":"https://docs.truelayer.com/reference","Revolut":"https://developer.revolut.com/docs",
+            "Plaid":"https://plaid.com/docs/api","Revolut":"https://developer.revolut.com/docs",
             "Wise":"https://docs.wise.com/api-docs","Adyen":"https://docs.adyen.com/api-explorer",
-            "Square":"https://developer.squareup.com/reference","Braintree":"https://developer.paypal.com/braintree/docs",
-            "CoinGecko":"https://www.coingecko.com/en/api","CoinMarketCap":"https://coinmarketcap.com/api",
-            "Nomics":"https://nomics.com/docs","Unsplash":"https://unsplash.com/documentation",
-            "TMDb":"https://developer.themoviedb.org/reference","NASA":"https://api.nasa.gov",
-            "SpaceX":"https://github.com/r-spacex/SpaceX-API","PokéAPI":"https://pokeapi.co/docs/v2",
-            "Notion":"https://developers.notion.com/reference","Airtable":"https://airtable.com/developers/web/api",
-            "Asana":"https://developers.asana.com/reference","Trello":"https://developer.atlassian.com/cloud/trello/rest",
-            "Monday":"https://developer.monday.com/api-reference","HubSpot":"https://developers.hubspot.com/docs/api",
-            "Salesforce":"https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest",
+            "Square":"https://developer.squareup.com/reference","CoinGecko":"https://www.coingecko.com/en/api",
+            "Unsplash":"https://unsplash.com/documentation","TMDb":"https://developer.themoviedb.org/reference",
+            "NASA":"https://api.nasa.gov","SpaceX":"https://github.com/r-spacex/SpaceX-API",
+            "PokéAPI":"https://pokeapi.co/docs/v2","Notion":"https://developers.notion.com/reference",
+            "Airtable":"https://airtable.com/developers/web/api","Asana":"https://developers.asana.com/reference",
+            "Trello":"https://developer.atlassian.com/cloud/trello/rest","Monday":"https://developer.monday.com/api-reference",
+            "HubSpot":"https://developers.hubspot.com/docs/api","Salesforce":"https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest",
             "Zoho":"https://www.zoho.com/creator/rest-api","Pipedrive":"https://developers.pipedrive.com/docs/api/v1",
             "Intercom":"https://developers.intercom.com/docs","Zendesk":"https://developer.zendesk.com/api-reference",
-            "Jira":"https://developer.atlassian.com/cloud/jira/platform/rest/v3",
-            "Confluence":"https://developer.atlassian.com/cloud/confluence/rest",
-            "Bitbucket":"https://developer.atlassian.com/cloud/bitbucket/rest","GitLab":"https://docs.gitlab.com/ee/api",
-            "CircleCI":"https://circleci.com/docs/api/v2","Jenkins":"https://www.jenkins.io/doc/book/using/remote-access-api",
-            "Terraform":"https://developer.hashicorp.com/terraform/cloud-docs/api-docs",
-            "Docker":"https://docs.docker.com/engine/api","Kubernetes":"https://kubernetes.io/docs/reference/kubernetes-api",
-            "Elasticsearch":"https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html",
-            "Redis":"https://redis.io/docs/latest/develop/connect/clients/rest",
-            "PostgreSQL":"https://www.postgresql.org/docs/current/libpq.html",
+            "Jira":"https://developer.atlassian.com/cloud/jira/platform/rest/v3","Confluence":"https://developer.atlassian.com/cloud/confluence/rest",
+            "GitLab":"https://docs.gitlab.com/ee/api","CircleCI":"https://circleci.com/docs/api/v2",
+            "Jenkins":"https://www.jenkins.io/doc/book/using/remote-access-api","Docker":"https://docs.docker.com/engine/api",
+            "Kubernetes":"https://kubernetes.io/docs/reference/kubernetes-api","Elasticsearch":"https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html",
+            "Redis":"https://redis.io/docs/latest/develop/connect/clients/rest","PostgreSQL":"https://www.postgresql.org/docs/current/libpq.html",
             "Amplitude":"https://developers.amplitude.com/docs","Mixpanel":"https://developer.mixpanel.com/reference",
-            "Hotjar":"https://help.hotjar.com/hc/en-us/articles/115011639887-Hotjar-API",
-            "Auth0":"https://auth0.com/docs/api","Okta":"https://developer.okta.com/docs/reference",
-            "Clerk":"https://clerk.com/docs/reference/backend-api","Adafruit":"https://io.adafruit.com/api/docs",
+            "Hotjar":"https://help.hotjar.com/hc/en-us/articles/115011639887-Hotjar-API","Auth0":"https://auth0.com/docs/api",
+            "Okta":"https://developer.okta.com/docs/reference","Adafruit":"https://io.adafruit.com/api/docs",
             "ThingSpeak":"https://thingspeak.com/pages/api","FlightAware":"https://flightaware.com/commercial/aeroapi",
             "TomTom":"https://developer.tomtom.com","HERE":"https://developer.here.com/documentation",
             "OpenFDA":"https://open.fda.gov/apis","Nutritionix":"https://developer.nutritionix.com",
             "Fitbit":"https://dev.fitbit.com/build/reference/web-api","Canvas":"https://canvas.instructure.com/doc/api",
-            "Google Classroom":"https://developers.google.com/classroom/reference/rest",
-            "Khan Academy":"https://github.com/Khan/khan-api","RAWG":"https://rawg.io/apidocs",
-            "Valorant":"https://dash.valorant-api.com","Indeed":"https://opensource.indeedeng.io/api-documentation",
-            "Glassdoor":"https://www.glassdoor.com/developer","Shopify":"https://shopify.dev/docs/api",
-            "WooCommerce":"https://woocommerce.github.io/woocommerce-rest-api-docs",
+            "Google Classroom":"https://developers.google.com/classroom/reference/rest","RAWG":"https://rawg.io/apidocs",
+            "Indeed":"https://opensource.indeedeng.io/api-documentation","Glassdoor":"https://www.glassdoor.com/developer",
+            "Shopify":"https://shopify.dev/docs/api","WooCommerce":"https://woocommerce.github.io/woocommerce-rest-api-docs",
             "Clearbit":"https://clearbit.com/docs","Hunter.io":"https://hunter.io/api-documentation",
-            "Zoom":"https://developers.zoom.us/docs/api","Teams":"https://learn.microsoft.com/en-us/graph/teams-concept-overview",
-            "Calendly":"https://developer.calendly.com/api-docs","Mailgun":"https://documentation.mailgun.com/en/latest/api_reference.html",
-            "Postmark":"https://postmarkapp.com/developer/api/overview",
-            "Looker":"https://developers.looker.com/api/overview",
-            "Tableau":"https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm",
-            "Snowflake":"https://docs.snowflake.com/en/developer-guide/sql-api",
-            "WordPress":"https://developer.wordpress.org/rest-api",
-            "Contentful":"https://www.contentful.com/developers/docs/references/content-management-api",
-            "Strapi":"https://docs.strapi.io/dev-docs/api/rest","Sanity":"https://www.sanity.io/docs/http-api"
+            "Zoom":"https://developers.zoom.us/docs/api","Calendly":"https://developer.calendly.com/api-docs",
+            "Mailgun":"https://documentation.mailgun.com/en/latest/api_reference.html","Postmark":"https://postmarkapp.com/developer/api/overview",
+            "Looker":"https://developers.looker.com/api/overview","Tableau":"https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm",
+            "Snowflake":"https://docs.snowflake.com/en/developer-guide/sql-api","WordPress":"https://developer.wordpress.org/rest-api",
+            "Contentful":"https://www.contentful.com/developers/docs/references/content-management-api","Strapi":"https://docs.strapi.io/dev-docs/api/rest"
         };
 
-        // ––– DATOS –––
         const TOTAL = 100000;
         const NAMES = Object.keys(API_URLS);
         const CATS = ["AI & Machine Learning","Finance","Developer Tools","Geolocation","Social & Messaging","Entertainment","Health","Education","IoT","Transport","Science","Government","Games","Jobs","Cryptocurrency","Sports","Travel","E-commerce","Security","Blockchain","Cloud","Analytics","Design","Marketing","Productivity","Communication","News","Environment","Agriculture","Legal","Music","Video","Photography","AR/VR","Robotics","Automation","Big Data","Databases","Search","Payments","Identity","Storage","Hosting","Monitoring","CI/CD"];
         const PRICING = ["Free","Freemium","Paid"];
         const AUTH = ["None","API Key","OAuth","JWT","Basic"];
 
-        // ––– GENERACIÓN INSTANTÁNEA –––
+        // ––– GENERAR APIs –––
         const allAPIs = [];
-        
         for (let i = 0; i < TOTAL; i++) {
             const nameIdx = i % NAMES.length;
             const nameBase = NAMES[nameIdx];
             const version = Math.floor(i / NAMES.length) + 1;
             const name = version > 1 ? `${nameBase} v${version}` : nameBase;
             const cat = CATS[i % CATS.length];
-            const url = API_URLS[nameBase] || `https://${nameBase.toLowerCase().replace(/[^a-z0-9]/g,'')}.com/docs`;
-            
             allAPIs.push({
                 id: i, name, nameBase,
                 desc: `${nameBase} API for ${cat.toLowerCase()}. Production-ready and well-documented.`,
                 category: cat, pricing: PRICING[i % 3], auth: AUTH[i % 5],
-                https: true, url
+                https: true, url: API_URLS[nameBase] || `https://${nameBase.toLowerCase().replace(/[^a-z0-9]/g,'')}.com/docs`
             });
         }
 
@@ -342,14 +284,12 @@
         let displayOffset = 0;
         const CHUNK = 50;
 
-        // ––– INICIALIZACIÓN –––
+        // ––– INICIAR –––
         function init() {
             populateCategories();
             renderResults();
-            document.getElementById('results-count').textContent = TOTAL.toLocaleString();
             loadDynamicNews();
             syncOnline();
-            
             document.getElementById('search-input').addEventListener('input', debounceSearch);
             document.getElementById('category-filter').addEventListener('change', runSearch);
             document.getElementById('pricing-filter').addEventListener('change', runSearch);
@@ -385,7 +325,7 @@
             count.textContent = filteredResults.length.toLocaleString();
             
             if (filteredResults.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center py-12"><div class="text-3xl mb-2">🔍</div><p class="text-gray-500 text-sm font-medium">No APIs found</p><p class="text-gray-400 text-xs mt-1">Try different keywords or filters</p></div>';
+                grid.innerHTML = '<div class="col-span-full text-center py-12"><div class="text-3xl mb-2">🔍</div><p class="text-gray-500 text-sm">No APIs found</p><p class="text-gray-400 text-xs mt-1">Try different keywords or filters</p></div>';
                 more.classList.add('hidden');
                 return;
             }
@@ -401,7 +341,7 @@
                             <span class="text-[7px] font-bold px-1.5 py-0.2 rounded-full flex-shrink-0 ${a.pricing==='Paid'?'bg-rose-50 text-rose-600':a.pricing==='Freemium'?'bg-amber-50 text-amber-600':'bg-emerald-50 text-emerald-600'}">${a.pricing}</span>
                         </div>
                         <h3 class="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate">${a.name}</h3>
-                        <p class="text-[10px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">${a.desc}</p>
+                        <p class="text-[10px] text-gray-500 mt-1 line-clamp-2">${a.desc}</p>
                     </div>
                     <div class="mt-2.5 pt-2.5 border-t border-gray-100 flex items-center justify-between">
                         <span class="text-[8px] text-gray-400">🔑 ${a.auth}</span>
@@ -423,24 +363,22 @@
             CATS.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; s.appendChild(o); });
         }
 
-        // ––– SYNC ONLINE –––
+        // ––– SYNC –––
         async function syncOnline() {
             try {
                 const r = await fetch('https://api.publicapis.org/entries');
                 if (r.ok) {
                     const d = await r.json();
                     if (d.entries) {
-                        let added = 0;
                         d.entries.forEach(e => {
                             if (!allAPIs.some(a => a.name.toLowerCase() === e.API.toLowerCase())) {
                                 allAPIs.push({
-                                    id: TOTAL + added, name: e.API,
+                                    id: allAPIs.length, name: e.API,
                                     desc: e.Description || 'No description.',
                                     category: e.Category || 'Other', pricing: 'Free',
                                     auth: e.Auth || 'None', https: e.HTTPS === true,
                                     url: e.Link || '#', nameBase: e.API
                                 });
-                                added++;
                             }
                         });
                     }
@@ -456,24 +394,95 @@
             setTimeout(() => { b.innerHTML = '<i class="fa-solid fa-sync-alt mr-1"></i> Sync'; b.disabled = false; }, 500);
         }
 
-        // ––– NOTICIAS DINÁMICAS (MÚLTIPLES FUENTES) –––
+        // ––– NOTICIAS DINÁMICAS –––
+        const fallbackNews = [
+            {title:"S&P 500 Hits All-Time High as Tech Stocks Rally",source:"Bloomberg",category:"Finance",url:"https://www.bloomberg.com"},
+            {title:"Federal Reserve Signals Rate Cuts for Q3 2026",source:"Reuters",category:"Finance",url:"https://www.reuters.com"},
+            {title:"Bitcoin Surges Past $100,000 as Institutional Adoption Grows",source:"CoinDesk",category:"Crypto",url:"https://www.coindesk.com"},
+            {title:"FDA Approves Groundbreaking Alzheimer's Treatment",source:"Medical News Today",category:"Health",url:"https://www.medicalnewstoday.com"},
+            {title:"New mRNA Vaccine Shows Promise Against Multiple Cancers",source:"Nature Medicine",category:"Health",url:"https://www.nature.com"},
+            {title:"Apple Unveils iPhone 18 with Revolutionary AI Features",source:"The Verge",category:"Tech",url:"https://www.theverge.com"},
+            {title:"Google's Quantum Computer Solves 100-Year Problem in Minutes",source:"Wired",category:"Tech",url:"https://www.wired.com"},
+            {title:"SpaceX Starship Completes First Mars Cargo Mission",source:"Space.com",category:"Space",url:"https://www.space.com"},
+            {title:"CERN Scientists Discover New Subatomic Particle",source:"Physics Today",category:"Science",url:"https://physicstoday.scitation.org"},
+            {title:"CRISPR Gene Therapy Cures Inherited Blindness in Clinical Trial",source:"Science Daily",category:"Science",url:"https://www.sciencedaily.com"},
+            {title:"Global EV Sales Surge 45% as New Markets Emerge",source:"CNBC",category:"Tech",url:"https://www.cnbc.com"},
+            {title:"UN Climate Report Shows Record-Breaking Temperatures for 2026",source:"National Geographic",category:"Environment",url:"https://www.nationalgeographic.com"}
+        ];
+
         async function loadDynamicNews() {
             const list = document.getElementById('news-list');
+            const catColors = {"Finance":"#059669","Crypto":"#F59E0B","Health":"#EF4444","Tech":"#3B82F6","Science":"#8B5CF6","Environment":"#10B981","Space":"#6366F1"};
             
-            const categoryColors = {
-                "Finance":"#059669","Crypto":"#F59E0B","Health":"#EF4444","Tech":"#3B82F6",
-                "Science":"#8B5CF6","Environment":"#10B981","Space":"#6366F1","AI":"#EC4899"
-            };
+            // Intentar cargar de múltiples fuentes
+            let allArticles = [];
             
-            // Noticias de respaldo por si fallan las APIs
-            const fallbackNews = [
-                {title:"S&P 500 Hits All-Time High as Tech Stocks Rally",source:"Bloomberg",category:"Finance",url:"#"},
-                {title:"Federal Reserve Signals Rate Cuts for Q3 2026",source:"Reuters",category:"Finance",url:"#"},
-                {title:"Bitcoin Surges Past $100,000 as Institutional Adoption Grows",source:"CoinDesk",category:"Crypto",url:"#"},
-                {title:"FDA Approves Groundbreaking Alzheimer's Treatment",source:"Medical News",category:"Health",url:"#"},
-                {title:"WHO Declares End to Global Health Emergency",source:"WHO",category:"Health",url:"#"},
-                {title:"New mRNA Vaccine Shows Promise Against Multiple Cancers",source:"Nature Medicine",category:"Health",url:"#"},
-                {title:"Apple Unveils iPhone 18 with Revolutionary AI Features",source:"The Verge",category:"Tech",url:"#"},
-                {title:"Google's Quantum Computer Solves 100-Year Problem",source:"Wired",category:"Tech",url:"#"},
-                {title:"SpaceX Starship Completes First Mars Cargo Mission",source:"Space.com",category:"Space",url:"#"},
-                {title:"CERN Scientists Discover New Subatomic Particle",source
+            try {
+                // Fuente 1: Spaceflight News API
+                const r1 = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=6');
+                if (r1.ok) {
+                    const d1 = await r1.json();
+                    d1.results.forEach(a => allArticles.push({
+                        title: a.title, source: a.news_site, category: "Space",
+                        url: a.url, time: new Date(a.published_at).toLocaleDateString()
+                    }));
+                }
+            } catch(e) {}
+
+            try {
+                // Fuente 2: NewsAPI (Hacker News)
+                const r2 = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
+                if (r2.ok) {
+                    const ids = (await r2.json()).slice(0, 6);
+                    const stories = await Promise.all(ids.map(id => 
+                        fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json())
+                    ));
+                    stories.forEach(a => {
+                        if (a && a.title) allArticles.push({
+                            title: a.title, source: "Hacker News", category: "Tech",
+                            url: a.url || `https://news.ycombinator.com/item?id=${a.id}`,
+                            time: new Date(a.time * 1000).toLocaleDateString()
+                        });
+                    });
+                }
+            } catch(e) {}
+
+            // Si no hay suficientes artículos, usar fallback
+            if (allArticles.length < 6) {
+                allArticles = [...allArticles, ...fallbackNews.slice(0, 12 - allArticles.length)];
+            }
+
+            // Mostrar máximo 12 noticias
+            const displayArticles = allArticles.slice(0, 12);
+            
+            list.innerHTML = displayArticles.map((a, i) => `
+                <a href="${a.url}" target="_blank" rel="noopener" class="block p-2.5 bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-200/60 transition-all group">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[8px] font-bold uppercase px-1.5 py-0.3 rounded-full" style="background:${catColors[a.category] || '#6B7280'}20;color:${catColors[a.category] || '#6B7280'}">${a.category}</span>
+                        <span class="text-[7px] text-gray-400">${a.source}${a.time ? ' • '+a.time : ''}</span>
+                    </div>
+                    <h4 class="text-[10px] font-semibold text-gray-800 line-clamp-2 group-hover:text-blue-600 transition-all leading-relaxed">${a.title}</h4>
+                </a>
+            `).join('');
+        }
+
+        function refreshNews() {
+            document.getElementById('news-list').innerHTML = '<div class="text-center py-8"><i class="fa-solid fa-spinner fa-spin text-blue-500 text-xl mb-2 block"></i><p class="text-xs text-gray-500">Refreshing news...</p></div>';
+            loadDynamicNews();
+        }
+
+        // ––– MODAL –––
+        function openContact() {
+            const m = document.getElementById('contact-modal');
+            m.classList.remove('hidden'); m.classList.add('flex');
+        }
+        function closeContact() {
+            const m = document.getElementById('contact-modal');
+            m.classList.add('hidden'); m.classList.remove('flex');
+        }
+
+        // ––– INICIAR –––
+        init();
+    </script>
+</body>
+</html>
