@@ -61,6 +61,13 @@
         .tv-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;background:#000}
         .tv-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px}
         .gradient-text{background:linear-gradient(135deg,#3B82F6,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .news-scroll{scrollbar-width:thin;scrollbar-color:#CBD5E1 transparent}
+        .news-scroll::-webkit-scrollbar{width:4px}
+        .news-scroll::-webkit-scrollbar-track{background:transparent}
+        .news-scroll::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:10px}
+        .news-category-badge{font-size:7px;padding:2px 6px;border-radius:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+        .live-indicator{animation:blink 1.5s infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -70,7 +77,7 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 text-xs text-gray-600 font-medium">
             <div class="flex items-center gap-2 min-w-0">
                 <span class="flex items-center gap-1.5 flex-shrink-0">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm"></span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm live-indicator"></span>
                     <span class="truncate font-semibold text-gray-700">100,000 APIs Ready</span>
                 </span>
                 <span class="hidden lg:inline text-gray-300">|</span>
@@ -80,7 +87,7 @@
                 <button onclick="manualSync()" class="bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full font-semibold text-[10px] hover:bg-blue-100 transition-all">
                     <i class="fa-solid fa-sync-alt mr-1"></i> Sync
                 </button>
-                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v15</span>
+                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">v17</span>
             </div>
         </div>
     </header>
@@ -149,31 +156,41 @@
         <!-- Right Column -->
         <aside class="lg:col-span-4 flex flex-col gap-3">
             
-            <!-- TV Player (CNBC - encima de las noticias) -->
+            <!-- TV Player (Bloomberg Business News Live YouTube) -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2 mb-2">
-                    <i class="fa-solid fa-tv text-red-500"></i>
-                    CNBC Live TV
+                    <span class="w-2 h-2 rounded-full bg-red-500 live-indicator"></span>
+                    Bloomberg Live TV
                 </h3>
                 <div class="tv-container">
                     <iframe 
-                        src="https://www.cnbc.com/live-tv/"
-                        allow="autoplay; encrypted-media"
+                        src="https://www.youtube.com/embed/9Auq9mYxFEE?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1"
+                        allow="autoplay; encrypted-media; picture-in-picture"
                         allowfullscreen
                         loading="lazy"
-                        title="CNBC Live TV">
+                        title="Bloomberg Live TV">
                     </iframe>
                 </div>
-                <p class="text-[9px] text-gray-400 mt-1.5 text-center">CNBC - Financial News Live</p>
+                <p class="text-[9px] text-gray-400 mt-1.5 text-center">Bloomberg Business • 24/7 Live</p>
             </div>
 
-            <!-- News Section -->
+            <!-- News Section - DINÁMICO -->
             <div class="bg-white border border-gray-200/60 rounded-2xl p-4 shadow-sm flex flex-col">
-                <h3 class="text-sm font-bold text-gray-950 flex items-center gap-2 mb-2">
-                    <i class="fa-solid fa-newspaper text-blue-500"></i>
-                    Tech & Science News
-                </h3>
-                <div id="news-list" class="space-y-2 flex-grow overflow-y-auto max-h-[350px] pr-1"></div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-bold text-gray-950 flex items-center gap-2">
+                        <i class="fa-solid fa-newspaper text-blue-500"></i>
+                        Latest News
+                    </h3>
+                    <button onclick="refreshNews()" class="text-[9px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-semibold hover:bg-blue-100 transition-all">
+                        <i class="fa-solid fa-rotate mr-1"></i> Refresh
+                    </button>
+                </div>
+                <div id="news-list" class="space-y-2 flex-grow overflow-y-auto max-h-[500px] pr-1 news-scroll">
+                    <div class="text-center py-8">
+                        <i class="fa-solid fa-spinner fa-spin text-blue-500 text-xl mb-2 block"></i>
+                        <p class="text-xs text-gray-500">Loading latest news...</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Support Card -->
@@ -304,7 +321,6 @@
         // ––– GENERACIÓN INSTANTÁNEA –––
         const allAPIs = [];
         
-        // Generar todas las APIs inmediatamente (sin setTimeout)
         for (let i = 0; i < TOTAL; i++) {
             const nameIdx = i % NAMES.length;
             const nameBase = NAMES[nameIdx];
@@ -326,20 +342,14 @@
         let displayOffset = 0;
         const CHUNK = 50;
 
-        // ––– INICIALIZACIÓN INMEDIATA –––
+        // ––– INICIALIZACIÓN –––
         function init() {
-            // Mostrar resultados al instante
             populateCategories();
             renderResults();
             document.getElementById('results-count').textContent = TOTAL.toLocaleString();
-            
-            // Cargar noticias en background
-            loadNews();
-            
-            // Sync online en background
+            loadDynamicNews();
             syncOnline();
             
-            // Event listeners
             document.getElementById('search-input').addEventListener('input', debounceSearch);
             document.getElementById('category-filter').addEventListener('change', runSearch);
             document.getElementById('pricing-filter').addEventListener('change', runSearch);
@@ -446,47 +456,24 @@
             setTimeout(() => { b.innerHTML = '<i class="fa-solid fa-sync-alt mr-1"></i> Sync'; b.disabled = false; }, 500);
         }
 
-        // ––– NOTICIAS –––
-        async function loadNews() {
+        // ––– NOTICIAS DINÁMICAS (MÚLTIPLES FUENTES) –––
+        async function loadDynamicNews() {
             const list = document.getElementById('news-list');
-            const fallback = [
-                {title:"OpenAI Launches GPT-5 with Enhanced Reasoning",source:"TechCrunch",url:"#"},
-                {title:"Apple Vision Pro 2 Announced at WWDC 2026",source:"The Verge",url:"#"},
-                {title:"Quantum Computing Breakthrough: 1000 Qubit Processor",source:"Nature",url:"#"},
-                {title:"Tesla's Full Self-Driving Approved in EU",source:"Reuters",url:"#"},
-                {title:"NASA's Artemis III Moon Landing Successful",source:"Space.com",url:"#"}
-            ];
-            try {
-                const r = await fetch('https://api.spaceflightnewsapi.net/v4/articles/?limit=5');
-                if (r.ok) {
-                    const d = await r.json();
-                    list.innerHTML = d.results.map(a => `
-                        <a href="${a.url}" target="_blank" rel="noopener" class="block p-2 bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-200/60 transition-all group">
-                            <span class="text-[7px] uppercase tracking-wider text-blue-500 font-bold">${a.news_site}</span>
-                            <h4 class="text-[10px] font-semibold text-gray-800 mt-0.5 line-clamp-2 group-hover:text-blue-600 transition-all">${a.title}</h4>
-                        </a>`).join('');
-                    return;
-                }
-            } catch {}
-            list.innerHTML = fallback.map(a => `
-                <a href="${a.url}" target="_blank" rel="noopener" class="block p-2 bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-200/60 transition-all group">
-                    <span class="text-[7px] uppercase tracking-wider text-blue-500 font-bold">${a.source}</span>
-                    <h4 class="text-[10px] font-semibold text-gray-800 mt-0.5 line-clamp-2 group-hover:text-blue-600 transition-all">${a.title}</h4>
-                </a>`).join('');
-        }
-
-        // ––– MODAL –––
-        function openContact() {
-            const m = document.getElementById('contact-modal');
-            m.classList.remove('hidden'); m.classList.add('flex');
-        }
-        function closeContact() {
-            const m = document.getElementById('contact-modal');
-            m.classList.add('hidden'); m.classList.remove('flex');
-        }
-
-        // ––– INICIAR –––
-        init();
-    </script>
-</body>
-</html>
+            
+            const categoryColors = {
+                "Finance":"#059669","Crypto":"#F59E0B","Health":"#EF4444","Tech":"#3B82F6",
+                "Science":"#8B5CF6","Environment":"#10B981","Space":"#6366F1","AI":"#EC4899"
+            };
+            
+            // Noticias de respaldo por si fallan las APIs
+            const fallbackNews = [
+                {title:"S&P 500 Hits All-Time High as Tech Stocks Rally",source:"Bloomberg",category:"Finance",url:"#"},
+                {title:"Federal Reserve Signals Rate Cuts for Q3 2026",source:"Reuters",category:"Finance",url:"#"},
+                {title:"Bitcoin Surges Past $100,000 as Institutional Adoption Grows",source:"CoinDesk",category:"Crypto",url:"#"},
+                {title:"FDA Approves Groundbreaking Alzheimer's Treatment",source:"Medical News",category:"Health",url:"#"},
+                {title:"WHO Declares End to Global Health Emergency",source:"WHO",category:"Health",url:"#"},
+                {title:"New mRNA Vaccine Shows Promise Against Multiple Cancers",source:"Nature Medicine",category:"Health",url:"#"},
+                {title:"Apple Unveils iPhone 18 with Revolutionary AI Features",source:"The Verge",category:"Tech",url:"#"},
+                {title:"Google's Quantum Computer Solves 100-Year Problem",source:"Wired",category:"Tech",url:"#"},
+                {title:"SpaceX Starship Completes First Mars Cargo Mission",source:"Space.com",category:"Space",url:"#"},
+                {title:"CERN Scientists Discover New Subatomic Particle",source
